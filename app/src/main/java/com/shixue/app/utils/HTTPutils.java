@@ -78,6 +78,8 @@ public class HTTPutils {
         params.addParameter("projectId", projectId);
         params.addParameter("examTypeId", examTypeId);
         params.addParameter("webchat", 0);
+
+
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
