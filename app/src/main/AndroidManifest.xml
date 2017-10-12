@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.shixue.app">
+    <!--添加权限-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--<uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>-->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <application
+        android:name=".APP"
+        android:allowBackup="true"
+        android:icon="@drawable/logo_jsz"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Design.Light.NoActionBar"
+        tools:replace="icon,theme">
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="379rmYcWXH9YQOGfYL78msUVvCvZXLWw"/>
+
+
+
+
+        <meta-data
+            android:name="BUG_HD_SDK_GENERAL_KEY"
+            android:value="ff5b0eef67bdbc21d5fcdccd3ae944a9"/>
+
+        <activity
+            android:name=".ui.activity.WelcomeAty"
+            android:screenOrientation="portrait"/><!--欢迎页-->
+        <activity
+            android:name=".ui.activity.MainFragmentActivity"
+            android:screenOrientation="portrait"/><!--主页-->
+        <activity
+            android:name=".ui.activity.LoginAty"
+            android:screenOrientation="portrait"/><!--登录页-->
+        <activity
+            android:name=".ui.activity.PersonalDetailsAty"
+            android:screenOrientation="portrait"/><!--用户信息详情修改页-->
+        <activity
+            android:name=".ui.activity.ExamTypeMoreAty"
+            android:screenOrientation="portrait"/><!--所有项目页-->
+        <activity
+            android:name=".ui.activity.DetailsFragmentAty"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/><!--简单二级跳转页面，由fragment控制显示内容-->
+        <activity
+            android:name=".ui.activity.School_Online_DetailsAty"
+            android:screenOrientation="portrait"/><!--在线课程详情-->
+        <activity
+            android:name=".ui.activity.School_DirectMoreAty"
+            android:screenOrientation="portrait"/><!--所有直播课程-->
+        <activity
+            android:name=".ui.activity.School_DirectDetailsAty"
+            android:screenOrientation="portrait"/> <!--直播详情-->
+
+        <activity
+            android:name=".ui.activity.PractiseTestAty"
+            android:screenOrientation="portrait"/><!--试题列表的节-->
+        <activity
+            android:name=".ui.activity.Practise_DetailsAty"
+            android:screenOrientation="portrait"/><!--试题详情页面-->
+
+        <activity
+            android:name=".ui.activity.OpenVipActivity"
+            android:screenOrientation="portrait"/><!--vip购买页-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wxd62e3cd243568c72"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.StartAty"
+            android:screenOrientation="portrait"><!--启动页-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.Activity_think"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.activity.CityAty"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.activity.Activity_Examdirectory"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ui.activity.Activity_practice_report"
+            android:screenOrientation="portrait"></activity>
+        <!--直播             android:launchMode="singleTop"
+
+-->
+        <activity
+            android:name=".ui.activity.VideoAty"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!--视频播放相关-->
+
+        <activity
+            android:name=".ui.activity.VideoActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTask"
+            android:process=":vitamio"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <service
+            android:name=".mediaplayer.VideoService"
+            android:process=":vitamio"/>
+        <service android:name=".database.DownloadService">
+            <!-- <intent-filter>
+                 <category android:name="android.intent.category.DEFAULT"/>
+             </intent-filter>-->
+        </service>
+        <!-- vitamin end-->
+
+        <activity
+            android:name=".ui.activity.MediaPlayerActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
+
+        <!--支付宝支付 start-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind">
+        </activity>
+        <!--支付宝支付 end-->
+
+
+        <!--qq分享-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="1104932934"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
+
+
+
+        <meta-data
+            android:name="design_width"
+            android:value="1080"></meta-data>
+        <meta-data
+            android:name="design_height"
+            android:value="1920"></meta-data>
+    </application>
+
+</manifest>

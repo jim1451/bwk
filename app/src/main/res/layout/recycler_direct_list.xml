@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
+            <!--状态标识-->
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10px"
+                    android:text="直"
+                    android:textSize="@dimen/TextSize11"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    android:id="@+id/tv_isPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorIng"
+                    android:padding="10px"
+                    android:text=" 直播中 "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/TextSize11"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_isSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:background="#42A3E6"
+                    android:padding="10px"
+                    android:text=" 已报名 "
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/TextSize11"
+                    android:visibility="gone"/>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+            <!--具体内容-->
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/top"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30px"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                >
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/item_img"
+                    android:layout_width="240px"
+                    android:layout_height="240px"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/home_img_sys"
+                    app:layout_auto_baseheight="width"/>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="30px">
+
+                    <TextView
+                        android:id="@+id/item_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="111"
+                        android:textColor="@color/color333"
+                        android:textSize="@dimen/TextSize18"/>
+
+
+                    <TextView
+                        android:layout_marginTop="5px"
+                        android:id="@+id/item_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="111"
+                        android:textColor="@color/color666"
+                        android:textSize="@dimen/TextSize13"/>
+
+                    <TextView
+                        android:id="@+id/item_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="111"
+                        android:textColor="@color/colorIng"
+                        android:textSize="@dimen/TextSize18"/>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+<TextView
+    android:background="#E9F1F7"
+    android:layout_width="match_parent"
+    android:layout_height="25px"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

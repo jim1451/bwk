@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/title"/>
+
+    <com.shixue.app.widget.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorWhite"
+                android:gravity="center"
+                android:padding="30px"
+                android:text="请选择开通时长"/>
+            <!--购买列表-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_vipList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:paddingBottom="50px">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <ImageView
+                style="@style/layout_match_wrap"
+                android:background="@drawable/cutline">
+            </ImageView>
+            <!--支付方式选择-->
+            <LinearLayout
+                android:id="@+id/linear_pay"
+                style="@style/layout_match_wrap"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+                <!--选择支付宝-->
+                <LinearLayout
+                    android:id="@+id/linear_alipay"
+                    style="@style/layout_match_wrap"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/alipay"/>
+
+                    <LinearLayout
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:text="支付宝支付"/>
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:text="推荐有支付宝账户的用户使用"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_alipay"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/pay_selector"/>
+
+                </LinearLayout>
+
+                <View style="@style/base_line"/>
+                <!--选择微信-->
+                <LinearLayout
+                    android:id="@+id/linear_wx"
+                    style="@style/layout_match_wrap"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/wechatpay"/>
+
+                    <LinearLayout
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/str_pay_wechatpay"/>
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/str_pay_wechatpayhint"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_wx"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/pay_selector"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--选择支付方式结束-->
+            <TextView
+                android:id="@+id/tv_oldData"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:padding="5dp"
+                android:text="原有效期:"
+                android:textColor="@color/color333"/>
+
+            <TextView
+                android:id="@+id/tv_newData"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="现有效期:"
+                android:textColor="#C51923"/>
+
+
+            <TextView
+                android:id="@+id/tv_payPrice"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="支付金额:"
+                android:textColor="#C51923"/>
+
+
+            <Button
+                android:id="@+id/btn_topay"
+                style="@style/layout_match_wrap"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_pay"
+                android:padding="10dp"
+                android:text="确认支付"
+                android:textColor="@color/colorWhite"/>
+
+        </LinearLayout>
+    </com.shixue.app.widget.MyScrollview>
+
+
+</LinearLayout>

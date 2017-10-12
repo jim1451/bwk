@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60px"
+        android:layout_marginTop="60px"
+        android:src="@drawable/icon03" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110px"
+        android:src="@drawable/login_logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70px"
+        android:layout_marginRight="70px"
+        android:layout_marginTop="90px"
+        android:background="@drawable/shape_bg_login"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50px"
+                android:src="@drawable/icon04" />
+
+            <EditText
+                android:id="@+id/edit_phone"
+                style="@style/editPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/editHeight"
+                android:layout_weight="1"
+                android:hint="请输入手机号"
+                android:paddingLeft="40px" />
+
+            <View
+                android:layout_width="0.3dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorLine" />
+
+            <TextView
+                android:id="@+id/tv_getSms"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="30px"
+                android:text="获取验证码"
+                android:textColor="@color/color333" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50px"
+                android:src="@drawable/icon07" />
+
+            <EditText
+                android:id="@+id/edit_smsCode"
+                style="@style/editSMS"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/editHeight"
+                android:layout_weight="1"
+                android:hint="请输入验证码"
+                android:paddingLeft="40px" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="60px"
+        android:background="@drawable/selector_btn_login"
+        android:gravity="center"
+        android:padding="30px"
+        android:text="快速登陆"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/TextSize16" />
+
+    <TextView
+        android:id="@+id/tv_try"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="60px"
+        android:background="@drawable/selector_btn_login"
+        android:gravity="center"
+        android:padding="30px"
+        android:text="试   用"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/TextSize16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20px"
+            android:text="点击登陆，即表示您已同意"
+            android:textColor="@color/color666" />
+
+        <TextView
+            android:id="@+id/tv_Agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《伴我考服务协议》"
+            android:textColor="@color/colorGreen" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="50px"
+        android:text="copyright © 伴我考 版权所有"
+        android:textColor="@color/colorHint" />
+</LinearLayout>

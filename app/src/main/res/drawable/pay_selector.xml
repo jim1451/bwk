@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 选中时效果 -->
+    <item android:drawable="@drawable/pay_select_pressed" android:state_selected="true"/>
+    <!-- 未选中时效果 -->
+    <item android:drawable="@drawable/pay_select_normal" android:state_enabled="true"/>
+
+       <!-- &lt;!&ndash; 默认时的背景图片&ndash;&gt;
+        <item android:drawable="@drawable/pay_select_normal" android:state_enabled="true" />
+
+        &lt;!&ndash; 非触摸模式下获得焦点并单击时的背景图片 &ndash;&gt;
+        <item android:state_selected="true" android:state_pressed="true"   android:drawable= "@drawable/pay_select_pressed" />
+    <item android:state_selected="false" android:state_pressed="false"   android:drawable= "@drawable/pay_select_normal" />-->
+</selector>

@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    },
+    {
+        "merged": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    },
+    {
+        "merged": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    },
+    {
+        "merged": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    },
+    {
+        "merged": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\libarm.so",
+        "source": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\raw\\libarm.so"
+    }
+]

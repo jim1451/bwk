@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3AC8B0"
+    android:orientation="vertical">
+
+    <ScrollView
+        style="@style/layout_match"
+
+        android:background="#3fd8fb">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            style="@style/layout_match"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_vipbg"/>
+
+            <TextView
+                android:id="@+id/tv_vip"
+                style="@style/layout_wrap"
+                android:layout_above="@+id/btn_vip"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="12dp"
+                android:visibility="invisible"/>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/linear_ad"
+                style="@style/layout_wrap"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp">
+
+                <TextView
+                    android:id="@+id/tv_ad"
+                    style="@style/layout_wrap"
+                    android:layout_gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/colorWhite"/>
+
+                <ImageView
+                    style="@style/layout_wrap"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_admore"
+                    android:visibility="invisible"/>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <Button
+                android:id="@+id/btn_vip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape_pay"
+                android:padding="6dp"
+                android:text="开通会员"
+                android:textColor="@color/colorWhite"
+                android:textSize="13dp"/>
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                style="@style/layout_match_wrap"
+
+                android:paddingBottom="8dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    style="@style/layout_match_wrap"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shape_circle_white"
+                    android:orientation="horizontal"
+                    android:padding="6dp">
+
+
+                    <EditText
+                        android:id="@+id/et_cdkey"
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="请输入兑换码"
+                        android:padding="5dp"
+                        android:textSize="12dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_exchange"
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:text="立刻兑换"
+                        android:textSize="12dp"/>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50px"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="20px">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/member001"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="会员可以在伴我考中学习全部在线课程和题库。"/>
+
+                <TextView
+                    android:layout_marginBottom="30px"
+                    android:layout_marginTop="30px"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/member002"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="会员将配备专业的微信客服，及时获得各种考试资讯和通知。"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/goods"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text="会员可以免费获得最新的题库、真题和学习资料。"/>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="20px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px"
+    >
+
+    <ImageView
+        android:layout_marginBottom="20px"
+        android:id="@+id/item_img"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        app:layout_auto_baseheight="width"
+        android:src="@drawable/home_img_sys"
+        android:scaleType="centerCrop"/>
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/item_toright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon17"/>
+    <!--分割线条-->
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30px"
+        android:background="@color/colorLine"
+        android:layout_toRightOf="@id/item_img"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/item_img"
+        android:layout_toLeftOf="@id/item_toright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingTop="5px"
+            android:singleLine="true"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/TextSize16"/>
+
+        <TextView
+            android:id="@+id/item_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:paddingTop="15px"
+            android:textColor="@color/color888"
+            android:textSize="@dimen/TextSize12"
+            />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+</com.zhy.autolayout.AutoRelativeLayout>

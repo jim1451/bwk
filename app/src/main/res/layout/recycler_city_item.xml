@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingRight="20px"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/item_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="江西"
+        android:padding="30px"
+        />
+    <ImageView
+        android:id="@+id/img_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/icon18"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

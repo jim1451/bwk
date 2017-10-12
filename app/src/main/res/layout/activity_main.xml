@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+   >
+
+    <include layout="@layout/main_title"/>
+
+    <FrameLayout
+        android:id="@+id/fram_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+    <include layout="@layout/line"/>
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10px"
+        android:paddingTop="20px">
+
+        <RadioButton
+            style="@style/mainRadioBtn"
+            android:drawableTop="@drawable/selector_btn_main_home"
+            android:text="首页"
+            />
+
+        <RadioButton
+            style="@style/mainRadioBtn"
+            android:drawableTop="@drawable/selector_btn_main_flow"
+            android:text="流程"
+            />
+
+        <RadioButton
+            style="@style/mainRadioBtn"
+            android:drawableTop="@drawable/selector_btn_main_school"
+            android:text="课程"
+            />
+
+        <RadioButton
+            style="@style/mainRadioBtn"
+            android:drawableTop="@drawable/selector_btn_main_practise"
+            android:text="题库"
+            />
+
+        <RadioButton
+            style="@style/mainRadioBtn"
+            android:drawableTop="@drawable/selector_btn_main_personal"
+            android:text="我的"
+            />
+    </RadioGroup>
+</com.zhy.autolayout.AutoLinearLayout>

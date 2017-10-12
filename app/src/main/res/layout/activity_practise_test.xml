@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/title"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="30px"
+        android:paddingRight="30px">
+
+        <ImageView
+            android:id="@+id/img_pic"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_margin="30px"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_img_sys"
+            app:layout_auto_baseheight="width"
+            />
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px"
+                android:singleLine="true"
+                android:text="标题"
+                android:textColor="@color/color333"
+                android:textSize="@dimen/TextSize16"
+                />
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="一句话描述"
+                android:textColor="@color/color888"
+                android:textSize="@dimen/TextSize13"
+                />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="30px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="10px"
+                >
+
+                <TextView
+                    android:id="@+id/tv_isFree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_line_notvip"
+                    android:paddingBottom="3px"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:paddingTop="3px"
+                    android:text="免费"
+                    android:textColor="#059B76"
+                    android:textSize="@dimen/TextSize12"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_isVip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_line_isvip"
+                    android:gravity="center"
+                    android:paddingBottom="3px"
+                    android:paddingLeft="40px"
+                    android:paddingRight="40px"
+                    android:paddingTop="3px"
+                    android:text="会员"
+                    android:textColor="#F88437"
+                    android:textSize="@dimen/TextSize12"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="60px"
+                    android:text="试卷"
+                    android:textColor="@color/color888"
+                    android:textSize="@dimen/TextSize13"
+                    />
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/line"/>
+    <!--头部结束-->
+    <!--类型开始-->
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="30px">
+
+        <RadioGroup
+            android:id="@+id/rg_practiseType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLine"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="0.1dp"
+            >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_practise"
+                android:button="@null"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingRight="20px"
+                android:paddingTop="15px"
+                android:text="练习模式"
+                android:textColor="@drawable/selector_text_practise"
+                android:textSize="@dimen/TextSize13"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_practise"
+                android:button="@null"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingRight="20px"
+                android:paddingTop="15px"
+                android:text="背题模式"
+                android:textColor="@drawable/selector_text_practise"
+                android:textSize="@dimen/TextSize13"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_practise"
+                android:button="@null"
+                android:paddingBottom="15px"
+                android:paddingLeft="20px"
+                android:paddingRight="20px"
+                android:paddingTop="15px"
+                android:text="真题模拟"
+                android:textColor="@drawable/selector_text_practise"
+                android:textSize="@dimen/TextSize13"/>
+
+        </RadioGroup>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/line"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_testList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+</com.zhy.autolayout.AutoLinearLayout>

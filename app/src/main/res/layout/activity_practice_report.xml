@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="#f6f6f6"
+        >
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E9F1F7"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:id="@+id/true_perfent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="15dp"
+                        android:text="正确率"
+                        android:textSize="17sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:paddingTop="15dp"
+                        android:text="2/5题"
+                        android:textSize="17sp"
+                        />
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.shixue.app.utils.RoundProgressBar
+                        android:id="@+id/progress_practice"
+                        android:layout_width="133dp"
+                        android:layout_height="133dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="10dp"
+                        android_custom:roundColor="#B7F0D0"
+                        android_custom:roundProgressColor="#11CD6E"
+                        android_custom:roundWidth="15px"
+                        android_custom:textSize="25sp"
+                        android_custom:textColor="#11CD6E"
+                        />
+                </FrameLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="答题卡"
+                    android:textColor="#333333"
+                    android:textSize="17sp"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_practice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </ScrollView>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            ></View>
+
+        <TextView
+            android:id="@+id/look_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_btn_more_blue"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:text="查看答案"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/angain_exerce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_dialog_btn_check"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:text="再次练题"
+            android:textColor="#f88437"
+            android:textSize="16sp"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            ></View>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

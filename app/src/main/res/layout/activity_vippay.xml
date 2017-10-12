@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eeeeee"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/title"/>
+
+
+    <ScrollView
+        style="@style/layout_match"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/layout_match"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/layout_match"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/layout_wrap"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:padding="5dp"
+                    android:text="请选择开通时长"/>
+
+                <LinearLayout
+                    style="@style/layout_match_wrap"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btn_onemonth"
+                        style="@style/layout_match_wrap"
+                        android:background="@drawable/shape_gray"
+                        android:padding="8dp"
+                        android:text="一个月(25元)"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_match_wrap"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btn_threemonth"
+                        style="@style/layout_match_wrap"
+                        android:background="@drawable/shape_gray"
+                        android:padding="8dp"
+                        android:text="三个月(68元)"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_match_wrap"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <Button
+                        android:id="@+id/btn_sixmonth"
+                        style="@style/layout_match_wrap"
+                        android:background="@drawable/shape_gray"
+                        android:padding="8dp"
+                        android:text="六个月(118元)"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/layout_match_wrap"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+
+                    >
+
+                    <Button
+                        android:id="@+id/btn_oneyear"
+                        style="@style/layout_match_wrap"
+                        android:background="@drawable/shape_gray"
+                        android:padding="8dp"
+                        android:text="一年(198元)"/>
+
+                </LinearLayout>
+
+
+                <ImageView
+                    style="@style/layout_match_wrap"
+                    android:background="@drawable/cutline">
+                </ImageView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_pay"
+                style="@style/layout_match_wrap"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+                <!--选择支付宝-->
+                <LinearLayout
+                    android:id="@+id/linear_alipay"
+                    style="@style/layout_match_wrap"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/alipay"/>
+
+                    <LinearLayout
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:text="支付宝支付"/>
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:text="推荐有支付宝账户的用户使用"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_alipay"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/pay_selector"/>
+
+                </LinearLayout>
+
+                <View style="@style/base_line"/>
+                <!--选择微信-->
+                <LinearLayout
+                    android:id="@+id/linear_wechatpay"
+                    style="@style/layout_match_wrap"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/wechatpay"/>
+
+                    <LinearLayout
+                        style="@style/layout_wrap"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/str_pay_wechatpay"/>
+
+                        <TextView
+                            style="@style/layout_wrap"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/str_pay_wechatpayhint"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_wechatpay"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/pay_selector"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:padding="5dp"
+                android:text="原有效期:"/>
+
+            <TextView
+                android:id="@+id/tv_expirydate"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="现有效期:"
+                android:textColor="#C51923"/>
+
+
+            <TextView
+                android:id="@+id/tv_vipprice"
+                style="@style/layout_wrap"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="支付金额:"
+                android:textColor="#C51923"/>
+
+
+            <Button
+                android:id="@+id/btn_pay"
+                style="@style/layout_match_wrap"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_pay"
+                android:padding="10dp"
+                android:text="确认支付"
+                android:textColor="@color/colorWhite"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

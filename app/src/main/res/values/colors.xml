@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#87b7ff</color>
+    <color name="colorPrimaryDark">#87b7ff</color>
+    <color name="colorAccent">#87b7ff</color>
+
+    <color name="colorAPP">#059B76</color>
+    <color name="colorGreen">#00AE51</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorCyan">#E7FEF7</color>
+    <color name="colorMore">#EF6E6F</color>
+    <color name="colorIng">#F88437</color>
+    <color name="color333">#333333</color>
+    <color name="color666">#666666</color>
+    <color name="color888">#888888</color>
+    <color name="colorHint">#AAAAAA</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorNull">#00FFFFFF</color>
+    <color name="colorBG">#E9F0F6</color>
+    <color name="colorLine">#CCCCCC</color>
+    <color name="colorEEE">#EEEEEE</color>
+    <color name="colorDialogBG">#50000000</color>
+    <color name="colorCheckBG">#F9F9F9</color>
+    <color name="colorStroke">#AFAFAF</color>
+    <color name="colorBtnDefault">#10B55D</color>
+    <color name="colorBtnCheck">#018D42</color>
+    <color name="colorSchool">#E9F1F7</color>
+    <color name="theme_color_lightdark">#343434</color>
+    <color name="theme_color_tabselect">#0F7CFC</color>
+    <color name="colorALLBlue">#0088ff</color>
+
+</resources>

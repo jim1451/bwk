@@ -1,0 +1,20 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="editHeight">140px</dimen>
+    <dimen name="titleHeight">140px</dimen>
+    <dimen name="itemHeight">160px</dimen>
+    <dimen name="itemOpenPicHeight">120px</dimen>
+
+    <!--系统默认字体大小为14sp-->
+    <dimen name="TextSize11">11sp</dimen>
+    <dimen name="TextSize12">12sp</dimen>
+    <dimen name="TextSize13">13sp</dimen>
+    <dimen name="TextSize">14sp</dimen>
+    <dimen name="TextSize15">15sp</dimen>
+    <dimen name="TextSize16">16sp</dimen>
+    <dimen name="TextSize17">17sp</dimen>
+    <dimen name="TextSize18">18sp</dimen>
+
+</resources>

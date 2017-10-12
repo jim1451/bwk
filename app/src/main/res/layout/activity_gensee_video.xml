@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/rela_min"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--头部-->
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="700px">
+
+            <com.gensee.view.GSVideoView
+                android:id="@+id/Top_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.gensee.view.GSDocViewGx
+                android:id="@+id/Top_doc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rela_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rela_topShowBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/top_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20px"
+                        android:src="@drawable/selector_zhibo_back"/>
+
+
+                    <SeekBar
+                        android:id="@+id/seek_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:padding="20px"/>
+
+                    <ImageView
+                        android:id="@+id/tv_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentRight="true"
+
+                        android:padding="20px"
+                        android:src="@drawable/selector_zhibo_quanping"
+                        />
+
+                    <ImageView
+                        android:id="@+id/img_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_toLeftOf="@id/tv_max"
+                        android:padding="20px"
+                        android:src="@drawable/selector_zhibo_qiehuan"
+                        />
+                </com.zhy.autolayout.AutoRelativeLayout>
+            </com.zhy.autolayout.AutoRelativeLayout>
+            <!--缓冲提示-->
+            <TextView
+                android:id="@+id/tv_caching"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="正在缓冲..."
+                android:visibility="gone"/>
+            <!--暂停提示-->
+            <TextView
+                android:id="@+id/tv_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="直播暂停...请稍候"
+                android:visibility="gone"/>
+
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+        <!--底部-->
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--聊天栏目-->
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorEEE"
+                >
+                <!--消息编辑发送控件-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rela_msgALL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:padding="20px">
+
+                    <!--真实输入控件-->
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:id="@+id/ll_send"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!--输入框、图标入口、发送按钮-->
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/img_open_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20px"
+                                android:src="@drawable/zhibo_open_icon"/>
+
+                            <com.gensee.view.ChatEditText
+                                android:id="@+id/edit_message"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_bg_videoedit"
+                                android:hint="别憋着了,但说无妨~"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:paddingBottom="5dp"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="10dp"
+                                android:paddingTop="5dp"
+                                android:textColor="@color/color666"
+                                android:textColorHint="@color/colorWhite"
+                                android:textSize="@dimen/TextSize13"/>
+
+                            <TextView
+                                android:id="@+id/tv_sendMsg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20px"
+                                android:background="@drawable/shape_bg_sendfalse"
+                                android:padding="20px"
+                                android:text="发送"
+                                android:textColor="@color/colorWhite"/>
+                        </com.zhy.autolayout.AutoLinearLayout>
+                        <!--输入控件end-->
+                        <!--聊天图标显示控件-->
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </com.zhy.autolayout.AutoLinearLayout>
+                    <!--真实输入控件end-->
+                </com.zhy.autolayout.AutoRelativeLayout>
+                <!--编辑框end-->
+
+                <!--消息列表展示-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/rela_msgALL"
+                    android:layout_marginRight="340px"
+                    >
+                </android.support.v7.widget.RecyclerView>
+                <!--在线人数-->
+                <TextView
+                    android:id="@+id/tv_people"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/rela_msgALL"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="50px"
+                    android:layout_marginRight="50px"
+                    android:drawableLeft="@drawable/zhibo_icon_user"
+                    android:drawablePadding="10px"
+                    android:text="0"
+                    android:visibility="gone"
+                    />
+            </com.zhy.autolayout.AutoRelativeLayout>
+            <!--小窗口-->
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="350px"
+                android:layout_height="225px"
+                android:layout_alignParentRight="true">
+
+                <com.gensee.view.GSVideoView
+                    android:id="@+id/small_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+
+                <com.gensee.view.GSDocViewGx
+                    android:id="@+id/small_doc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+    <!--最大化图像-->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rela_max"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:visibility="gone"
+        >
+
+        <com.gensee.view.GSVideoView
+            android:id="@+id/max_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <com.gensee.view.GSDocViewGx
+            android:id="@+id/max_doc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="300px"
+            android:layout_height="170px"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            >
+
+            <com.gensee.view.GSVideoView
+                android:id="@+id/bottom_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+            <com.gensee.view.GSDocViewGx
+                android:id="@+id/bottom_doc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rela_maxShow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rela_maxShowBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/max_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20px"
+                    android:src="@drawable/selector_zhibo_back"/>
+
+                <ImageView
+                    android:id="@+id/img_max_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="20px"
+                    android:src="@drawable/selector_zhibo_qiehuan"
+                    />
+
+                <ImageView
+                    android:id="@+id/tv_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/img_max_change"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/selector_zhibo_huanyuan"
+                    />
+
+                <SeekBar
+                    android:id="@+id/seek_max"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="330px"
+                    android:padding="20px"/>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+</com.zhy.autolayout.AutoRelativeLayout>

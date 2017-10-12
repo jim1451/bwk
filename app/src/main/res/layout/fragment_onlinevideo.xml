@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="match_parent"
+                                     android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_online_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-1dp"
+        android:background="@color/colorEEE"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="30px">
+
+
+        <TextView
+            android:id="@+id/tv_allDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30px"
+            android:background="@drawable/selector_dialog_btn_check"
+            android:gravity="center"
+            android:paddingBottom="15px"
+            android:paddingLeft="80px"
+            android:paddingRight="80px"
+            android:paddingTop="15px"
+            android:text="全部下载"
+            android:textColor="@drawable/selector_dialog_text_color"
+            android:textSize="@dimen/TextSize16"
+            />
+
+        <TextView
+            android:id="@+id/tv_allDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:background="@drawable/selector_dialog_btn_check"
+            android:gravity="center"
+            android:paddingBottom="15px"
+            android:paddingLeft="80px"
+            android:paddingRight="80px"
+            android:paddingTop="15px"
+            android:text="全部删除"
+            android:textColor="@drawable/selector_dialog_text_color"
+            android:textSize="@dimen/TextSize16"
+            />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

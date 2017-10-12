@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="250dp"
+              android:layout_height="wrap_content"
+       >
+
+    <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="请选择清晰度"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/color333"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:id="@+id/tv_dialog_hint"
+            android:textColor="@color/theme_color_lightdark"
+            android:text="你现在使用的是移动网络"
+            android:layout_gravity="center"/>
+
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/colorLine"
+            android:layout_marginTop="15dp"/>
+
+    <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+            android:id="@+id/tv_gaoqing"
+            android:padding="8dp"
+            android:text="高清"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:textColor="#007aff"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/colorLine"
+      />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="标清(推荐)"
+            android:id="@+id/tv_biaoqing"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="#007aff"
+
+            android:gravity="center"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/colorLine"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:id="@+id/tv_liuchang"
+            android:textStyle="bold"
+            android:text="流畅"
+            android:textSize="14dp"
+            android:textColor="#007aff"
+            android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linear_cancel"
+            android:visibility="gone">
+        <View android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:background="@color/colorLine"
+            />
+        <TextView
+                style="@style/layout_match_wrap"
+                android:padding="8dp"
+                android:id="@+id/tv_cancel"
+                android:textStyle="bold"
+                android:text="取消"
+                android:textSize="14dp"
+                android:textColor="#007aff"
+                android:gravity="center"/>
+    </LinearLayout>
+
+
+</LinearLayout>
