@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class PractiseFragment extends BaseFragment {
 
     List<LayoutWrapper> wrapperList;//数据源
     SuperAdapter superAdapter;//适配器
-    int[] layoutIds = new int[]{R.layout.recycler_item_title, R.layout.recycler_practise_list};//布局
+    int[] layoutIds = new int[]{R.layout.recycler_item_title, R.layout.recycler_practise_list};//多布局适配器
     DataHolder<String> titleHolder;
     DataHolder<PractiseTitleListResult.SubjectListBean.LibraryListBean> dataHolder;
 
@@ -57,9 +58,10 @@ public class PractiseFragment extends BaseFragment {
     protected void init() {
 
         /**
-         * 请求试题数据
+         * 请求试题数据（题库）
+         *
          */
-        APP.apiService.getPractiseTitleList(APP.projectID, APP.examType)
+        APP.apiService.getPractiseTitleList(1, APP.examType)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<PractiseTitleListResult>() {

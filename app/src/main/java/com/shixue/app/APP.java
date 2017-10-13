@@ -174,7 +174,7 @@ public class APP extends BaseApplication {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
         baiduClient.setLocOption(option);
-    }
+}
 
     private void initShared(String str) {
         shared = getSharedPreferences(str, MODE_PRIVATE);

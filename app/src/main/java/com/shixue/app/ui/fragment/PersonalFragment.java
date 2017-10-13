@@ -149,37 +149,34 @@ public class PersonalFragment extends BaseFragment {
                         break;
                     case "考试类别":
                         //考试类别
-                        if (APP.examTypeList == null) return;
-                        for (int i = 0; i < APP.examTypeList.size(); i++) {
-                            for (int j = 0; j < APP.examTypeList.get(i).getProjectList().size(); j++) {
-                                if (APP.projectID == APP.examTypeList.get(i).getProjectList().get(j).getProjectId()) {
-                                    String projectName = APP.examTypeList.get(i).getProjectList().get(j).getProjectName();
-                                    if (APP.examInfoBean == null) {
-                                        HTTPutils.getExamInfo(APP.examType, new HTTPutils.OnTaskClick<ExamInfoResult.ProjectBean>() {
-                                            @Override
-                                            public void onSuccess(ExamInfoResult.ProjectBean projectBean) {
-                                                APP.examInfoBean = projectBean;
-                                                HTTPutils.showExamListDialog(getActivity(), projectName, APP.examInfoBean.getExamTypeList(), myDialog -> {
+//                        if (APP.examTypeList == null) return;
+//                        for (int i = 0; i < APP.examTypeList.size(); i++) {
+//                            for (int j = 0; j < APP.examTypeList.get(i).getProjectList().size(); j++) {
+//                                if (APP.projectID == APP.examTypeList.get(i).getProjectList().get(j).getProjectId()) {
+//                                    String projectName = APP.examTypeList.get(i).getProjectList().get(j).getProjectName();
+//                                    if (APP.examInfoBean == null) {
+//                                        HTTPutils.getExamInfo(APP.examType, new HTTPutils.OnTaskClick<ExamInfoResult.ProjectBean>() {
+//                                            @Override
+//                                            public void onSuccess(ExamInfoResult.ProjectBean projectBean) {
+//                                                APP.examInfoBean = projectBean;
+//                                                HTTPutils.showExamListDialog(getActivity(), projectName, APP.examInfoBean.getExamTypeList(), myDialog -> {
+//
+//                                                });
+//                                            }
+//
+//                                            @Override
+//                                            public void onError(String ex) {
+//
+//                                            }
+//                                        });
+//                                    } else {
+//                                        HTTPutils.showExamListDialog(getActivity(), projectName, APP.examInfoBean.getExamTypeList(), myDialog -> {
+//
+//                                        });
+//                                    }
+                        HTTPutils.showExamListDialog(getActivity(), "在线学教师证", APP.examInfoBean.getExamTypeList(), myDialog -> {
 
-                                                });
-                                            }
-
-                                            @Override
-                                            public void onError(String ex) {
-
-                                            }
-                                        });
-                                    } else {
-                                        HTTPutils.showExamListDialog(getActivity(), projectName, APP.examInfoBean.getExamTypeList(), myDialog -> {
-
-                                        });
-                                    }
-
-                                    break;
-                                }
-                            }
-                        }
-
+                        });
                         break;
                     case "邀请好友":
                         //邀请有礼
@@ -314,8 +311,8 @@ public class PersonalFragment extends BaseFragment {
                 APP.projectID = 1;
                 APP.ProvinceID = 1;
                 APP.CityID = 1;*/
-              //  APP.projectID=APP.APP_ID;
-              //  APP.examType=APP.defaultExamType;
+                //  APP.projectID=APP.APP_ID;
+                //  APP.examType=APP.defaultExamType;
                 APP.vipBean = null;
                 APP.isVip = false;
                 APP.vipDay = 0;

@@ -27,8 +27,8 @@ import rx.schedulers.Schedulers;
 
 
 /**
- * 本页：
- * Created by jjs on 2016-12-03.
+ * 本页： 直播详情页
+ * Created by 刘荣芳 on 2016-12-03.
  */
 
 public class School_DirectMoreAty extends BaseActivity {
@@ -43,14 +43,13 @@ public class School_DirectMoreAty extends BaseActivity {
         setContentView(R.layout.activity_direct_more);
         ButterKnife.bind(this);
         init();
-
     }
 
     @Override
     protected void init() {
         setTitle("直播课程");
         //传入用户手机号，传入项目id
-        APP.apiService.getLiveDirectList(APP.projectID, APP.examType)
+        APP.apiService.getLiveDirectList(1, APP.examType)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<LiveDirectResult>() {

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jjs.Jbase.BaseFragmentActivity;
@@ -241,11 +242,9 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
     }
 
     public void changeExamDir() {//获取项目类型二级分类
-        HTTPutils.getExamInfo(APP.projectID, new HTTPutils.OnTaskClick<ExamInfoResult.ProjectBean>() {
+        HTTPutils.getExamInfo(1, new HTTPutils.OnTaskClick<ExamInfoResult.ProjectBean>() {
             @Override
             public void onSuccess(ExamInfoResult.ProjectBean examInfoBean) {
-
-
                 APP.examInfoBean = examInfoBean;
                 setExamTypeName();
             }
@@ -286,9 +285,10 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
     @OnClick({R.id.ll_title_Type, R.id.tv_title_city})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_title_Type:
+            case R.id.ll_title_Type://项目二级分类
                 //考试方向
                 HTTPutils.showExamListDialog(MainFragmentActivity.this, mTvTitleExamType.getText().toString().trim(), APP.examInfoBean.getExamTypeList(), myDialog -> {
+
                 });
                 break;
             case R.id.tv_title_city:

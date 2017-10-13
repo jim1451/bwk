@@ -146,7 +146,7 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
                 //跳转更多直播列表
                 goActivity(School_DirectMoreAty.class);
                 break;
-            case R.id.rela_direct_Left:
+            case R.id.rela_direct_Left://跳转到直播详情页
                 Intent intent0 = new Intent(getActivity(), School_DirectDetailsAty.class);
                 intent0.putExtra("bean", directList.get(0));
                 startActivity(intent0);

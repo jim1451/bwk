@@ -18,7 +18,6 @@ import com.shixue.app.ui.activity.DetailsFragmentAty;
 import com.shixue.app.ui.activity.MainFragmentActivity;
 import com.shixue.app.ui.bean.ExamInfoResult;
 import com.shixue.app.ui.bean.ExamTypeResult;
-import com.shixue.app.ui.bean.GetImgCodeResult;
 import com.shixue.app.ui.bean.UserInfoBean;
 import com.shixue.app.ui.bean.VipBean;
 
@@ -150,7 +149,8 @@ public class HTTPutils {
                     JSONObject object = new JSONObject(result);
                     boolean success = object.getBoolean("success");
                     if (success) {
-                        APP.userInfo = new Gson().fromJson(object.getJSONObject("body").toString(), UserInfoBean.class);
+
+                        APP.userInfo = new Gson().fromJson(result, UserInfoBean.class);
                         Log.e("onError", APP.userInfo + "---");
 //                        APP.examType = APP.userInfo.getBody().getExamTypeId();
                         APP.projectID = APP.userInfo.getBody().getUser().getProjectId();
@@ -531,21 +531,23 @@ public class HTTPutils {
     }
 
     public static void getExamInfo(int examID, OnTaskClick<ExamInfoResult.ProjectBean> taskClick) {
-        if (APP.examTypeList == null) {
-            getExamTypeList(new OnTaskClick<List<ExamTypeResult.ProjTypeListBean>>() {
-                @Override
-                public void onSuccess(List<ExamTypeResult.ProjTypeListBean> projTypeListBeen) {
-                    getExamInfo1(examID, taskClick);
-                }
+//        if (APP.examTypeList == null) {
+//            getExamTypeList(new OnTaskClick<List<ExamTypeResult.ProjTypeListBean>>() {
+//                @Override
+//                public void onSuccess(List<ExamTypeResult.ProjTypeListBean> projTypeListBeen) {
+//                    getExamInfo1(examID, taskClick);
+//                }
+//
+//                @Override
+//                public void onError(String ex) {
+//
+//                }
+//            });
+//        } else {
+//            getExamInfo1(examID, taskClick);
+//        }
+        getExamInfo1(examID, taskClick);
 
-                @Override
-                public void onError(String ex) {
-
-                }
-            });
-        } else {
-            getExamInfo1(examID, taskClick);
-        }
     }
 
     private static void getExamInfo1(int examID, OnTaskClick taskClick) {
