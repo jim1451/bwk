@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,8 +22,10 @@ import com.shixue.app.ui.bean.CityResult;
 import com.shixue.app.ui.bean.ExamInfoResult;
 import com.shixue.app.ui.bean.ExamTypeResult;
 import com.shixue.app.ui.bean.GetImgCodeResult;
+import com.shixue.app.ui.bean.SingleVipResult;
 import com.shixue.app.ui.bean.UserInfoBean;
 import com.shixue.app.ui.bean.VipBean;
+import com.shixue.app.ui.bean.httpBean;
 
 import org.litepal.LitePalApplication;
 import org.xutils.x;
@@ -29,6 +33,8 @@ import org.xutils.x;
 import java.util.List;
 
 import retrofit2.Retrofit;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -52,8 +58,10 @@ public class APP extends BaseApplication {
     private String updataHTTP = "http://sj.qq.com/myapp/detail.htm?apkName=";
     public static String APPupdataUrl = "";//APP下载地址（应用宝）(需要添加数据！！！！！！！！)
     public static boolean changeType = false;
-
-
+    public static boolean isTry = false;//用于判断是不是试用
+    public static String picUrl = "http://119.29.194.199/sxkj/";
+    public static String htmlUrl = "http://119.29.194.199/sxkj/";
+    public static String NOTIFY_URL = "http://www.banwokao.com/manager/";
     //单例模式
     public static Gson gson;
     public static LocationClient baiduClient = null;
@@ -68,7 +76,12 @@ public class APP extends BaseApplication {
     //APP数据
     public static boolean isSMSLogin = false;
     public static VipBean vipBean;//用户vip数据，有vip才有数据，无vip时为null
+    public static SingleVipResult SingleVipBean;
+    public static int singleVip = 0;//判断单个考试类型Vip  0未开通 1 开通了其中一种会员 2 两种会员都开通
+    public static int singleVipType = 0;
+
     public static boolean isVip = false;//是否是vip
+    public static int vipType;//用于判断是哪种类型的Vip
     public static int vipDay = 0;//vip剩余天数
     public static int ProvinceID = 2;//省份（默认广东）
     public static int CityID = 128;//城市(默认广州)
@@ -79,6 +92,7 @@ public class APP extends BaseApplication {
     public static List<CityResult.ProvListBean> provinceBeanList;//省份城市列表
     public static String password = "1234";
     public static GetImgCodeResult imgCodeResult;
+    public static int vipStatus = 1;//判断当前考试类型是否过期
 
     @Override
     public void onCreate() {
@@ -90,6 +104,22 @@ public class APP extends BaseApplication {
         initOther();
         LitePalApplication.initialize(this);
         x.Ext.init(this);
+        getApi();
+    }
+
+    public static boolean hasNetwork() {
+        // 获取网络管理器
+        ConnectivityManager connmanager = (ConnectivityManager) APPcontext
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        // 获取网络状态
+        NetworkInfo info = connmanager.getActiveNetworkInfo();
+        // 如果为空。表示没有网络
+        if (info == null) {
+            mToast("无网络,请检查后重试");
+            return false;
+        }
+        return true;
+
     }
 
     private void updateDefaultDATE(String logName, int appID, int projecID, int examTypeID) {//更新基础默认数据
@@ -101,7 +131,6 @@ public class APP extends BaseApplication {
             if (examType == 0) {
                 examType = 1;
             }
-
         }
         // projectID = projecID;
         // examType = examTypeID;
@@ -174,7 +203,7 @@ public class APP extends BaseApplication {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
         baiduClient.setLocOption(option);
-}
+    }
 
     private void initShared(String str) {
         shared = getSharedPreferences(str, MODE_PRIVATE);
@@ -192,7 +221,6 @@ public class APP extends BaseApplication {
             versionCode = info.versionCode;//手机当前安装的版本号
             versionName = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("eee---", "异常");
             e.printStackTrace();
         }
     }
@@ -220,4 +248,22 @@ public class APP extends BaseApplication {
         toast.show();
     }
 
+    //获取所有地址域名
+    private void getApi() {
+        APP.apiService.getHttpServer("").subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscribe<httpBean>() {
+                    @Override
+                    protected void _onNext(httpBean httpBean) {
+                        APP.picUrl = httpBean.getAttachPrefixUrl();
+                        APP.htmlUrl = httpBean.getAttachPrefixUrl();
+                        APP.NOTIFY_URL = httpBean.getAttachPrefixUrl();
+                    }
+
+                    @Override
+                    protected void _onError(String msg) {
+
+                    }
+                });
+    }
 }

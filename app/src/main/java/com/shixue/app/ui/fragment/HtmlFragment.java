@@ -2,6 +2,7 @@ package com.shixue.app.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.jjs.Jbase.BaseFragment;
+import com.shixue.app.APP;
 import com.shixue.app.ApiService;
 import com.shixue.app.R;
 import com.shixue.app.utils.L;
@@ -36,21 +38,42 @@ public class HtmlFragment extends BaseFragment {
     protected void init() {
         Bundle bundle = getArguments();
         WebSettings webSettings = mWebHtml.getSettings();
-      //  webSettings.setUseWideViewPort(true);
-      //  webSettings.setLoadWithOverviewMode(true);
-        webSettings.setJavaScriptEnabled(true);
-      //  webSettings.setBuiltInZoomControls(true);
-      //  webSettings.setSupportZoom(false);
-      //  webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-      //  webSettings.setLoadWithOverviewMode(true);
-       // webSettings.setLoadsImagesAutomatically(true);
-        //mWebHtml.requestFocusFromTouch();
 
-        L.e("html:" + bundle.getString("url"));
+        //  webSettings.setUseWideViewPort(true);
+        //  webSettings.setLoadWithOverviewMode(true);
+        webSettings.setJavaScriptEnabled(true);
+        //  webSettings.setBuiltInZoomControls(true);
+        //  webSettings.setSupportZoom(false);
+        //  webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        //  webSettings.setLoadWithOverviewMode(true);
+        // webSettings.setLoadsImagesAutomatically(true);
+        //mWebHtml.requestFocusFromTouch();
+//
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setBuiltInZoomControls(false);//支持是否缩放
+////        webSettings.setSupportZoom(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setDomStorageEnabled(true);
+////        webSettings.setLoadWithOverviewMode(true);
+////        webSettings.setLoadsImagesAutomatically(true);
+////        webSettings.setDisplayZoomControls(false);
+////        mWebHtml.requestFocusFromTouch();
+//        mWebHtml.setVerticalScrollBarEnabled(false);
+//        mWebHtml.setVerticalScrollbarOverlay(false);
+//        mWebHtml.setHorizontalScrollBarEnabled(false);
+//        mWebHtml.setHorizontalScrollbarOverlay(false);
+
+
+
         if (bundle.getString("url").contains("http")) {
             mWebHtml.loadUrl(bundle.getString("url"));
-        } else {
-            mWebHtml.loadUrl(ApiService.htmlUrl + bundle.getString("url"));
+
+         } else {
+            mWebHtml.loadUrl(APP.htmlUrl + bundle.getString("url"));
+            Log.e("html:", APP.htmlUrl + bundle.getString("url"));
+
         }
         mWebHtml.setWebViewClient(new WebViewClient() {
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.jjs.Jbase.BaseActivity;
@@ -40,7 +41,7 @@ public class CityAty extends BaseActivity {
         setContentView(R.layout.activity_city);
         ButterKnife.bind(this);
         if (APP.provinceBeanList == null || APP.provinceBeanList.size() == 0) {
-            APP.apiService.getCityList()
+            APP.apiService.getCityList("")
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RxSubscribe<CityResult>() {
@@ -131,20 +132,24 @@ public class CityAty extends BaseActivity {
                 /**
                  * 保存城市
                  */
-                if (APP.userInfo != null) {
+                if (APP.userInfo != null&&APP.userInfo.getBody()!=null) {
+                    Log.e("City", "---1" + APP.userInfo.getBody().getUser().getMobile() + "   " + APP.ProvinceID + "   " + APP.CityID);
                     HTTPutils.updateCity(APP.userInfo.getBody().getUser().getMobile(), APP.ProvinceID, APP.CityID, new HTTPutils.OnTaskClick() {
                         @Override
                         public void onSuccess(Object o) {
+                            Log.e("City", "---1");
                             setResult(ResultOK);
                             finish();
                         }
 
                         @Override
                         public void onError(String ex) {
-                            APP.mToast(ex);
+                            Log.e("City", "---2");
+//                            APP.mToast(ex);
                         }
                     });
                 } else {
+                    Log.e("City", "---3");
                     setResult(ResultOK);
                     finish();
                 }

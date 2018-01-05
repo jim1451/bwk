@@ -81,7 +81,7 @@ public class ExamTypeMoreAty extends BaseActivity {
             TextView view = holder.getView(R.id.item_name);
             view.setText(item.getProjectName());
             ImageView img = holder.getView(R.id.item_img);
-            Glide.with(ExamTypeMoreAty.this).load(ApiService.picUrl + ((ExamTypeResult.ProjTypeListBean.ExamTypeBean) wrapperList.get(position).getData()).getProjectPicture()).into(img);
+            Glide.with(ExamTypeMoreAty.this).load(APP.picUrl + ((ExamTypeResult.ProjTypeListBean.ExamTypeBean) wrapperList.get(position).getData()).getProjectPicture()).into(img);
 
             if (APP.projectID == ((ExamTypeResult.ProjTypeListBean.ExamTypeBean) wrapperList.get(position).getData()).getProjectId()) {
                 holder.getView(R.id.item_check).setVisibility(View.VISIBLE);

@@ -7,13 +7,25 @@ package com.shixue.app.ui.bean;
  */
 
 public class VersionResult {
+
+
     /**
-     * softAndroidVersion : 3
-     * softIosVersion : 3.0.1
+     * examTypeId : 0
+     * softAndroidVersion : 4.1.3
+     * softIosVersion : 4
      */
 
+    private int examTypeId;
     private String softAndroidVersion;
     private String softIosVersion;
+
+    public int getExamTypeId() {
+        return examTypeId;
+    }
+
+    public void setExamTypeId(int examTypeId) {
+        this.examTypeId = examTypeId;
+    }
 
     public String getSoftAndroidVersion() {
         return softAndroidVersion;
@@ -30,27 +42,4 @@ public class VersionResult {
     public void setSoftIosVersion(String softIosVersion) {
         this.softIosVersion = softIosVersion;
     }
-//    /**
-//     * softAndroidVersion : 3
-//     * softIosVersion : 3
-//     */
-//
-//    private int  softAndroidVersion;
-//    private int softIosVersion;
-//
-//    public int getSoftAndroidVersion() {
-//        return softAndroidVersion;
-//    }
-//
-//    public void setSoftAndroidVersion(int softAndroidVersion) {
-//        this.softAndroidVersion = softAndroidVersion;
-//    }
-//
-//    public int getSoftIosVersion() {
-//        return softIosVersion;
-//    }
-//
-//    public void setSoftIosVersion(int softIosVersion) {
-//        this.softIosVersion = softIosVersion;
-//    }
 }

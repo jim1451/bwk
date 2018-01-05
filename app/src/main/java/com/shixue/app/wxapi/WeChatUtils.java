@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.util.Xml;
 
+import com.shixue.app.APP;
 import com.shixue.app.ApiService;
 import com.shixue.app.utils.L;
 
@@ -586,7 +587,7 @@ public class WeChatUtils {
             ip = getLocalIpAddress();
         }
         try {
-            L.e("微信回调地址：" + ApiService.NOTIFY_URL);
+            L.e("微信回调地址：" + APP.NOTIFY_URL);
             String nonceStr = genNonceStr();
             xml.append("</xml>");
             List<NameValuePair> packageParams = new LinkedList<NameValuePair>();
@@ -595,7 +596,7 @@ public class WeChatUtils {
             packageParams.add(new BasicNameValuePair("body", body));
             packageParams.add(new BasicNameValuePair("mch_id", ApiService.WC_MCH_ID));
             packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
-            packageParams.add(new BasicNameValuePair("notify_url", ApiService.NOTIFY_URL));
+            packageParams.add(new BasicNameValuePair("notify_url", APP.NOTIFY_URL));
             packageParams.add(new BasicNameValuePair("out_trade_no", orderId)); //订单号
             packageParams.add(new BasicNameValuePair("spbill_create_ip", ip));
             packageParams.add(new BasicNameValuePair("total_fee", totalFee));

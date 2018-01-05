@@ -1,6 +1,7 @@
 package com.shixue.app.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jjs.Jbase.BaseModel;
 import com.shixue.app.contract.PersonalDetailsContract;
@@ -20,6 +21,8 @@ public class PersonalDetailsModel extends BaseModel<PersonalDetailsContract.View
 
     @Override
     public void saveUserData(String name, int sex, String email, String address, String mobile) {
+        Log.e("saveUserData", name + "  " + sex + "  " + email + "  " + "  " + address + "   " + mobile);
+
         HTTPutils.updateUser(mobile, name, sex, email, address, new HTTPutils.OnTaskClick() {
             @Override
             public void onSuccess(Object o) {

@@ -220,7 +220,7 @@
             android:paddingLeft="50px"
             android:text="￥0"
             android:textColor="@color/colorIng"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_toSign"
@@ -234,7 +234,7 @@
             android:paddingTop="20px"
             android:text="报名"
             android:textColor="@drawable/selector_dialog_text_color"
-            android:textSize="@dimen/TextSize16"/>
+            android:textSize="@dimen/TextSize16" />
     </LinearLayout>
 
 

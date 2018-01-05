@@ -1,102 +1,138 @@
 package com.shixue.app.ui.bean;
 
+import java.util.List;
+
 /**
  * 本页：
  * Created by jjs on 2016-12-06.
  */
 
 public class VipBean {
+
+
     /**
-     * lastUpdateDate : 1469116800000
-     * projectId : 3
-     * slastUpdateDate : 2016-07-22 12:00:00
-     * svipDate : 2016-12-31
-     * sysDate : 2016-12-06
-     * userProjectId : 104912
-     * userid : 2507
-     * vipDate : 1483113600000
-     * webchat : 0
+     * body : {"examTypeId":0,"vipInfoList":[{"chargeType":1,"examTypeId":1,"examTypeName":"幼儿园","vipDate":"2018-10-20","vipStatus":1}]}
+     * errorCode : -1
+     * msg : 获取数据成功
+     * success : true
      */
 
-    private long lastUpdateDate;
-    private int projectId;
-    private String slastUpdateDate;
-    private String svipDate;
-    private String sysDate;
-    private int userProjectId;
-    private int userid;
-    private long vipDate;
-    private int webchat;
+    private BodyBean body;
+    private String errorCode;
+    private String msg;
+    private boolean success;
 
-    public long getLastUpdateDate() {
-        return lastUpdateDate;
+    public BodyBean getBody() {
+        return body;
     }
 
-    public void setLastUpdateDate(long lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setBody(BodyBean body) {
+        this.body = body;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public String getSlastUpdateDate() {
-        return slastUpdateDate;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setSlastUpdateDate(String slastUpdateDate) {
-        this.slastUpdateDate = slastUpdateDate;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public String getSvipDate() {
-        return svipDate;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setSvipDate(String svipDate) {
-        this.svipDate = svipDate;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public String getSysDate() {
-        return sysDate;
-    }
+    public static class BodyBean {
+        /**
+         * examTypeId : 0
+         * vipInfoList : [{"chargeType":1,"examTypeId":1,"examTypeName":"幼儿园","vipDate":"2018-10-20","vipStatus":1}]
+         */
 
-    public void setSysDate(String sysDate) {
-        this.sysDate = sysDate;
-    }
+        private int examTypeId;
+        private List<VipInfoListBean> vipInfoList;
 
-    public int getUserProjectId() {
-        return userProjectId;
-    }
+        public int getExamTypeId() {
+            return examTypeId;
+        }
 
-    public void setUserProjectId(int userProjectId) {
-        this.userProjectId = userProjectId;
-    }
+        public void setExamTypeId(int examTypeId) {
+            this.examTypeId = examTypeId;
+        }
 
-    public int getUserid() {
-        return userid;
-    }
+        public List<VipInfoListBean> getVipInfoList() {
+            return vipInfoList;
+        }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
+        public void setVipInfoList(List<VipInfoListBean> vipInfoList) {
+            this.vipInfoList = vipInfoList;
+        }
 
-    public long getVipDate() {
-        return vipDate;
-    }
+        public static class VipInfoListBean {
+            /**
+             * chargeType : 1
+             * examTypeId : 1
+             * examTypeName : 幼儿园
+             * vipDate : 2018-10-20
+             * vipStatus : 1
+             */
 
-    public void setVipDate(long vipDate) {
-        this.vipDate = vipDate;
-    }
+            private int chargeType;
+            private int examTypeId;
+            private String examTypeName;
+            private String vipDate;
+            private int vipStatus;
 
-    public int getWebchat() {
-        return webchat;
-    }
+            public int getChargeType() {
+                return chargeType;
+            }
 
-    public void setWebchat(int webchat) {
-        this.webchat = webchat;
+            public void setChargeType(int chargeType) {
+                this.chargeType = chargeType;
+            }
+
+            public int getExamTypeId() {
+                return examTypeId;
+            }
+
+            public void setExamTypeId(int examTypeId) {
+                this.examTypeId = examTypeId;
+            }
+
+            public String getExamTypeName() {
+                return examTypeName;
+            }
+
+            public void setExamTypeName(String examTypeName) {
+                this.examTypeName = examTypeName;
+            }
+
+            public String getVipDate() {
+                return vipDate;
+            }
+
+            public void setVipDate(String vipDate) {
+                this.vipDate = vipDate;
+            }
+
+            public int getVipStatus() {
+                return vipStatus;
+            }
+
+            public void setVipStatus(int vipStatus) {
+                this.vipStatus = vipStatus;
+            }
+        }
     }
 }

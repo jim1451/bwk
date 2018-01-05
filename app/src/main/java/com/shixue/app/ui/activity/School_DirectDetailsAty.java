@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.shixue.app.R;
 import com.shixue.app.RxSubscribe;
 import com.shixue.app.ui.bean.DirectDetailsResult;
 import com.shixue.app.ui.bean.LiveDirectResult;
+import com.shixue.app.ui.bean.SingleVipResult;
 import com.shixue.app.ui.bean.SysTimeResult;
 import com.shixue.app.utils.HTTPutils;
 import com.shixue.app.utils.L;
@@ -41,6 +43,7 @@ import rx.schedulers.Schedulers;
 /**
  * 本页：
  * Created by jjs on 2016-12-01.
+ * 直播详情页
  */
 
 public class School_DirectDetailsAty extends BaseActivity {
@@ -72,21 +75,93 @@ public class School_DirectDetailsAty extends BaseActivity {
     /**
      * 讲师介绍取消
      */
-    LiveDirectResult.LiveDirectBean mDirectBean;//直播详情
+    LiveDirectResult.LiveCourseListBean mDirectBean;//直播详情
     DirectDetailsResult directDetailsResult;//节列表详情
     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     int isPlayType = -1;
     long nowTime;
-    boolean hasRead = false;//是否报名能够阅读
+    boolean hasRead = true;//是否报名能够阅读
+    private int vipStatus = 0;// 0 不是会员 1 是会员 2 会员已过期
+    private int chargeType = 0;
+    private boolean isRechange = false;//是否需要续费Vip
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direct_details);
         ButterKnife.bind(this);
-        mDirectBean = (LiveDirectResult.LiveDirectBean) getIntent().getSerializableExtra("bean");
-        init();
+        mDirectBean = (LiveDirectResult.LiveCourseListBean) getIntent().getSerializableExtra("bean");
+        chargeType = mDirectBean.getChargeType();
+        checkIsVip();
     }
+
+    //先获取判断是不是Vip会员
+    private void checkIsVip() {
+        APP.apiService.getSingleVipResult("1", APP.userInfo.getBody().getUser().getMobile(), APP.examType + "").subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscribe<SingleVipResult>() {
+            @Override
+            protected void _onNext(SingleVipResult singleVipResult) {
+                if (chargeType == 0) {//免费
+                    hasRead = true;
+                } else {//会员
+                    if (APP.singleVip == 0) {//未开通会员
+                        hasRead = false;
+                    } else if (APP.singleVip == 1) {//开通了一种 会员
+                        if (APP.SingleVipBean.getVipInfoList().get(0).getChargeType() == chargeType) {//课程会员和开通的会员相对应
+                            if (APP.SingleVipBean.getVipInfoList().get(0).getVipStatus() == 2) {//开通的=会员已过期
+                                isRechange = true;//续费
+                            } else {//未过期
+                                hasRead = true;
+                            }
+                        } else {//课程会员与开通的会员不对应
+                            hasRead = false;
+                        }
+
+                    } else if (APP.singleVip == 2) {//两种会员都开通了
+                        for (int i = 0; i < APP.SingleVipBean.getVipInfoList().size(); i++) {//遍历取出与之对应的会员
+                            if (APP.SingleVipBean.getVipInfoList().get(i).getChargeType() == chargeType) {//判断该课程下的会员是否到期了
+                                if (APP.SingleVipBean.getVipInfoList().get(i).getVipStatus() == 2) {//会员过期
+                                    isRechange = true;
+                                } else {
+                                    hasRead = true;
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+
+
+                if (singleVipResult.getVipInfoList() == null || singleVipResult.getVipInfoList().size() == 0) {//未开通会员
+                    hasRead = false;
+                } else if (singleVipResult.getVipInfoList().size() == 1) {//只开通了其中的一种 会员
+                    vipStatus = singleVipResult.getVipInfoList().get(0).getVipStatus();
+                    if (chargeType == singleVipResult.getVipInfoList().get(0).getChargeType()) {
+                        hasRead = true;
+                    } else {
+                        hasRead = false;
+                    }
+                } else if (singleVipResult.getVipInfoList().size() == 2) {//两种会员都开通了
+                    hasRead = true;
+
+
+                }
+                if (chargeType == 0) {//课程为免费 都可以进行光看
+                    hasRead = true;
+                }
+                Log.e("hasRead", hasRead + " " + chargeType);
+                init();
+            }
+
+            @Override
+            protected void _onError(String msg) {
+                Log.e("checkIsVip", "获取单个Vip会员详情失败");
+            }
+        });
+
+    }
+
 
     @Override
     protected void init() {
@@ -99,7 +174,7 @@ public class School_DirectDetailsAty extends BaseActivity {
         }
         setCheck(1);
         if (mDirectBean.getPictureUrl() != null && mDirectBean.getPictureUrl().length() > 0) {
-            Glide.with(School_DirectDetailsAty.this).load(ApiService.picUrl + mDirectBean.getPictureUrl()).into(mImgTopBG);
+            Glide.with(School_DirectDetailsAty.this).load(APP.picUrl + mDirectBean.getPictureUrl()).into(mImgTopBG);
         } else {
             if (mDirectBean.getPrice() > 0) {
                 Glide.with(School_DirectDetailsAty.this).load(R.drawable.zhibo_img_vip).into(mImgTopBG);
@@ -118,17 +193,18 @@ public class School_DirectDetailsAty extends BaseActivity {
             mTvToVideo.setVisibility(View.GONE);
         }*/
         ///需要调接口再次判断是否报名了
-        if (APP.userInfo == null) {
+        if (APP.userInfo == null) {//还未报名
+            Log.e("School_DirectDetailsAty", "1111");
             mLiTopToSign.setVisibility(View.VISIBLE);
             mTvToVideo.setVisibility(View.GONE);
-            mLiPrice.setVisibility(View.VISIBLE);
-            APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId())
+            mLiPrice.setVisibility(View.GONE);
+            APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId(), APP.userInfo.getBody().getUser().getMobile())
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new RxSubscribe<DirectDetailsResult>() {
                         @Override
                         protected void _onNext(DirectDetailsResult directDetailsResult) {
-                            APP.apiService.getSysTime()
+                            APP.apiService.getSysTime("")
                                     .subscribeOn(Schedulers.newThread())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new RxSubscribe<SysTimeResult>() {
@@ -160,15 +236,17 @@ public class School_DirectDetailsAty extends BaseActivity {
                         }
                     });
         } else {
-            if (mDirectBean.getPrice() <= 0) {
+            Log.e("School_DirectDetailsAty", APP.userInfo.getBody().getUser().getMobile());
+            if (mDirectBean.getPrice() <= 0) {//费用小于0
+                Log.e("School_DirectDetailsAty", "2222");
                 hasRead = true;
-                APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId())
+                APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId(), APP.userInfo.getBody().getUser().getMobile())
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new RxSubscribe<DirectDetailsResult>() {
                             @Override
                             protected void _onNext(DirectDetailsResult directDetailsResult) {
-                                APP.apiService.getSysTime()
+                                APP.apiService.getSysTime("")
                                         .subscribeOn(Schedulers.newThread())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new RxSubscribe<SysTimeResult>() {
@@ -201,53 +279,48 @@ public class School_DirectDetailsAty extends BaseActivity {
                                 APP.mToast(msg);
                             }
                         });
-            } else
-                HTTPutils.hasRead(APP.userInfo.getBody().getUser().getMobile(), mDirectBean.getLiveCourseId(), new HTTPutils.OnBooleanClick() {
-                    @Override
-                    public void onSuccess(boolean b) {
-                        hasRead = b;
-                        APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId())
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new RxSubscribe<DirectDetailsResult>() {
-                                    @Override
-                                    protected void _onNext(DirectDetailsResult directDetailsResult) {
-                                        APP.apiService.getSysTime()
-                                                .subscribeOn(Schedulers.newThread())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new RxSubscribe<SysTimeResult>() {
-                                                    @Override
-                                                    protected void _onNext(SysTimeResult sysTimeResult) {
-                                                        try {
-                                                            Date date = sDateFormat.parse(sysTimeResult.getCurrDate());
-                                                            nowTime = date.getTime();
-                                                            L.e(sysTimeResult.toString());
-                                                            L.e("nowTime:" + date.getTime());
-                                                            showDetailsList(directDetailsResult);
-                                                        } catch (ParseException e) {
-                                                            e.printStackTrace();
-                                                            APP.mToast("当前时间获取失败" +
-                                                                    "");
-                                                        }
+            } else {
+                APP.apiService.getDirectDetails(mDirectBean.getLiveCourseId(), APP.userInfo.getBody().getUser().getMobile())
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new RxSubscribe<DirectDetailsResult>() {
+                            @Override
+                            protected void _onNext(DirectDetailsResult directDetailsResult) {
+                                APP.apiService.getSysTime("")
+                                        .subscribeOn(Schedulers.newThread())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new RxSubscribe<SysTimeResult>() {
+                                            @Override
+                                            protected void _onNext(SysTimeResult sysTimeResult) {
+                                                try {
+                                                    Date date = sDateFormat.parse(sysTimeResult.getCurrDate());
+                                                    nowTime = date.getTime();
+                                                    L.e(sysTimeResult.toString());
+                                                    L.e("nowTime:" + date.getTime());
+                                                    showDetailsList(directDetailsResult);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                    APP.mToast("当前时间获取失败" +
+                                                            "");
+                                                }
 
-                                                    }
+                                            }
 
-                                                    @Override
-                                                    protected void _onError(String msg) {
-                                                        APP.mToast(msg);
-                                                    }
-                                                });
+                                            @Override
+                                            protected void _onError(String msg) {
+                                                APP.mToast(msg);
+                                            }
+                                        });
 
-                                    }
+                            }
 
-                                    @Override
-                                    protected void _onError(String msg) {
-                                        APP.mToast(msg);
-                                    }
-                                });
+                            @Override
+                            protected void _onError(String msg) {
+                                APP.mToast(msg);
+                            }
+                        });
 
-                    }
-                });
+            }
         }
 
 
@@ -263,7 +336,7 @@ public class School_DirectDetailsAty extends BaseActivity {
         if (!hasRead) {
             mLiTopToSign.setVisibility(View.VISIBLE);
             mTvToVideo.setVisibility(View.GONE);
-            mLiPrice.setVisibility(View.VISIBLE);
+            mLiPrice.setVisibility(View.GONE);
         } else if (isPlayType > -1) {
             mLiTopToSign.setVisibility(View.GONE);
             mTvToVideo.setVisibility(View.VISIBLE);
@@ -350,32 +423,29 @@ public class School_DirectDetailsAty extends BaseActivity {
             goActivity(LoginAty.class);
             return;
         }
-        //判断是否报名
-        if (hasRead) {
-            //跳转直播播放
-         /*   if (nowTime < directDetailsResult.getLiveSectionList().get(position).getStarttime()) {
-                APP.mToast("直播未开始");
-            } else if (nowTime > directDetailsResult.getLiveSectionList().get(position).getStarttime()
-                    && nowTime < directDetailsResult.getLiveSectionList().get(position).getStarttime() + directDetailsResult.getLiveSectionList().get(position).getMinutes() * 60 * 1000) {
-                //直播中
+        next(position);
+    }
+
+    private void next(int position) {
+        if (hasRead) {//改为是否为会员
+            if (!TextUtils.isEmpty(directDetailsResult.getLiveSectionList().get(position).getLiveSectionUrl())) {//录播
+                Intent goClass = new Intent(School_DirectDetailsAty.this, VideoAtyRecord.class);
+                goClass.putExtra("bean", directDetailsResult.getLiveSectionList().get(position));
+                startActivity(goClass);
+            } else {
                 Intent goClass = new Intent(School_DirectDetailsAty.this, VideoAty.class);
                 goClass.putExtra("bean", directDetailsResult.getLiveSectionList().get(position));
                 startActivityForResult(goClass, 1);
-            } else if (nowTime > directDetailsResult.getLiveSectionList().get(position).getStarttime() + directDetailsResult.getLiveSectionList().get(position).getMinutes() * 60 * 1000) {
-                if (directDetailsResult.getLiveSectionList().get(position).getVideoId() != 0) {
-                    Intent goVideo = new Intent(School_DirectDetailsAty.this, VideoAty.class);
-                    goVideo.putExtra("bean", directDetailsResult.getLiveSectionList().get(position));
-                    startActivityForResult(goVideo, 1);
-                } else {
-                    APP.mToast("直播已结束");
-                }
-            }*/
-            Intent goClass = new Intent(School_DirectDetailsAty.this, VideoAty.class);
-            goClass.putExtra("bean", directDetailsResult.getLiveSectionList().get(position));
-            startActivityForResult(goClass, 1);
+            }
+
         } else {
             //弹窗提示
-            new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
+            if (isRechange) {//续费
+                HTTPutils.showGOvipDialog(School_DirectDetailsAty.this, "本学段的会员已过期", "续费");
+            } else {
+                HTTPutils.showGOvipDialog(School_DirectDetailsAty.this, "您尚未开通本学段的会员", "开通会员");
+            }
+            //            new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
         }
     }
 
@@ -411,10 +481,10 @@ public class School_DirectDetailsAty extends BaseActivity {
                 if (isPlayType < 0 || nowTime < 1) return;
                 changeCheck(isPlayType, nowTime);
                 break;
-            case R.id.rBtn_details:
+            case R.id.rBtn_details://详情
                 setCheck(0);
                 break;
-            case R.id.rBtn_list:
+            case R.id.rBtn_list://课程表
                 setCheck(1);
                 break;
             case R.id.tv_toSign:
@@ -422,14 +492,16 @@ public class School_DirectDetailsAty extends BaseActivity {
                     goActivity(LoginAty.class);
                     return;
                 }
-                new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
+//                new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
+                HTTPutils.showGOvipDialog(School_DirectDetailsAty.this, "您尚未开通本学段的会员", "开通会员");
                 break;
             case R.id.ll_top_toSign:
                 if (APP.userInfo == null) {
                     goActivity(LoginAty.class);
                     return;
                 }
-                new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
+//                new WXshpaeDialog(School_DirectDetailsAty.this).show("报名方式", mDirectBean.getSignMsg(), mDirectBean.getWeixin());
+                HTTPutils.showGOvipDialog(School_DirectDetailsAty.this, "您尚未开通本学段的会员", "开通会员");
                 break;
         }
     }

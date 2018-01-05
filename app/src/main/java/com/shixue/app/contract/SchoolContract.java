@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface SchoolContract {
     interface View extends BaseView {
-        void showDirect(List<LiveDirectResult.LiveDirectBean> directList);
+        void showDirect(List<LiveDirectResult.LiveCourseListBean> directList);
 
         void showOnline(List<LiveOnlineResult.SubjectListBean> subjList);
 

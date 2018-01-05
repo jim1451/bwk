@@ -21,6 +21,7 @@ import com.shixue.app.ui.activity.DetailsFragmentAty;
 import com.shixue.app.ui.activity.LoginAty;
 import com.shixue.app.ui.activity.MainFragmentActivity;
 import com.shixue.app.ui.activity.PersonalDetailsAty;
+import com.shixue.app.ui.activity.VipDetailsActivity;
 import com.shixue.app.ui.bean.CityResult;
 import com.shixue.app.ui.bean.ExamInfoResult;
 import com.shixue.app.ui.bean.PersnalItemBean;
@@ -54,19 +55,26 @@ public class PersonalFragment extends BaseFragment {
     TextView mTvLoginOut;
     private SingleReAdpt reAdpt;
     List<PersnalItemBean> personalitemList;
-
+    private String[] examType = new String[]{"","幼儿园","小学","初级中学","高级中学","中职文化课","中职专业客","中职实习指导"};
+    private String strExamType="";
     @Override
     protected void onCreat() {
         setContentView(R.layout.fragment_personal);
     }
 
+
     @Override
     public void init() {
+        strExamType = examType[APP.examType];
         personalitemList = new ArrayList<>();
         personalitemList.add(new PersnalItemBean(R.drawable.icon33, "会员中心", "未开通"));
         personalitemList.add(new PersnalItemBean(R.drawable.icon34, "我的城市", "北京-北京"));
-        personalitemList.add(new PersnalItemBean(R.drawable.icon35, "考试类别", ""));
-        personalitemList.add(new PersnalItemBean(R.drawable.icon40, "邀请好友", ""));
+        personalitemList.add(new PersnalItemBean(R.drawable.icon35, "考试类别", strExamType));
+//        personalitemList.add(new PersnalItemBean(R.drawable.icon35, "笔试会员", ""));
+//        personalitemList.add(new PersnalItemBean(R.drawable.icon35, "面试会员", ""));
+
+
+//        personalitemList.add(new PersnalItemBean(R.drawable.icon40, "邀请好友", ""));
         // personalitemList.add(new PersnalItemBean(R.drawable.icon41, "意见反馈", ""));
         personalitemList.add(new PersnalItemBean(R.drawable.icon42, "关于我们", ""));
         if (APP.userInfo != null) {
@@ -88,7 +96,7 @@ public class PersonalFragment extends BaseFragment {
             mTvLoginOut.setVisibility(View.VISIBLE);
 
             if (APP.provinceBeanList == null || APP.provinceBeanList.size() == 0) {
-                APP.apiService.getCityList()
+                APP.apiService.getCityList("")
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new RxSubscribe<CityResult>() {
@@ -138,10 +146,15 @@ public class PersonalFragment extends BaseFragment {
                             goActivity(LoginAty.class);
                             return;
                         }
-                        Intent vipIntent = new Intent(getActivity(), DetailsFragmentAty.class);
-                        vipIntent.putExtra("type", "vip");
-                        vipIntent.putExtra("name", "会员中心");
-                        startActivityForResult(vipIntent, 2);
+
+//                        Intent vipIntent = new Intent(getActivity(), DetailsFragmentAty.class);
+//                        vipIntent.putExtra("type", "vip");
+//                        vipIntent.putExtra("name", "会员中心");
+//                        startActivityForResult(vipIntent, 2);
+
+                             Intent vipIntent = new Intent(getActivity(), VipDetailsActivity.class);
+                            startActivity(vipIntent);
+
                         break;
                     case "我的城市":
                         //城市
@@ -209,7 +222,7 @@ public class PersonalFragment extends BaseFragment {
         if (APP.userInfo != null) {
             HTTPutils.getVipBean(APP.userInfo.getBody().getUser().getMobile(), APP.projectID, b -> {
                 if (APP.isVip) {
-                    personalitemList.get(0).setStrRight("剩余(" + APP.vipDay + "天) " + "截至日期:" + APP.vipBean.getSvipDate());
+                    personalitemList.get(0).setStrRight("已开通");
                 } else {
                     personalitemList.get(0).setStrRight("未开通");
                 }
@@ -247,7 +260,7 @@ public class PersonalFragment extends BaseFragment {
 
             @Override
             public void onError(String ex) {
-                APP.mToast(ex);
+//                APP.mToast(ex);
             }
         });
       /*  } else {

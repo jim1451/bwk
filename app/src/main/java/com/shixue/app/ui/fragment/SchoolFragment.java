@@ -1,9 +1,12 @@
 package com.shixue.app.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +66,11 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
     AutoRelativeLayout mRelaDirectRight;
 
     List<LayoutWrapper> wrapperList;//在线课程数据源
-    List<LiveDirectResult.LiveDirectBean> directList;//直播数据源
+    List<LiveDirectResult.LiveCourseListBean> directList;//直播数据源
     SuperAdapter superAdapter;//在线课程适配器
     int[] layoutIds = new int[]{R.layout.recycler_item_title, R.layout.recycler_school_online};//布局
     DataHolder<String> titleHolder;
     DataHolder<LiveOnlineResult.SubjectListBean.LiveOnlineBean> dataHolder;
-
 
     @Override
     protected void onCreat() {
@@ -85,16 +87,26 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
             view.setText(item);
         };
         dataHolder = (context, holder, item, position) -> {
-            Glide.with(getActivity()).load(ApiService.picUrl + ((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getPictureUrl()).into((ImageView) holder.getView(R.id.item_img));
+            Log.e("dataHolder", APP.picUrl + ((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getPictureUrl());
+            Glide.with(getActivity()).load(APP.picUrl + ((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getPictureUrl()).into((ImageView) holder.getView(R.id.item_img));
             ((TextView) holder.getView(R.id.item_title)).setText(((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getCourseName());
             ((TextView) holder.getView(R.id.item_msg)).setText(((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getOneWord());
             ((TextView) holder.getView(R.id.item_time)).setText(((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getCourseCount() + "课时");
-            if (((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getChargeType() == 0) {
+            int ChargeType = ((LiveOnlineResult.SubjectListBean.LiveOnlineBean) wrapperList.get(position).getData()).getChargeType();
+
+            if (ChargeType == 0) {//免费
                 holder.getView(R.id.item_isVip).setVisibility(View.GONE);
+                holder.getView(R.id.item_isFaceVip).setVisibility(View.GONE);
                 holder.getView(R.id.item_notVip).setVisibility(View.VISIBLE);
-            } else {
+            } else if (ChargeType == 1) {//笔试会员
                 holder.getView(R.id.item_isVip).setVisibility(View.VISIBLE);
                 holder.getView(R.id.item_notVip).setVisibility(View.GONE);
+                holder.getView(R.id.item_isFaceVip).setVisibility(View.GONE);
+
+            } else if (ChargeType == 2) {//面试会员
+                holder.getView(R.id.item_isVip).setVisibility(View.GONE);
+                holder.getView(R.id.item_notVip).setVisibility(View.GONE);
+                holder.getView(R.id.item_isFaceVip).setVisibility(View.VISIBLE);
             }
         };
         wrapperList = new ArrayList<>();
@@ -161,7 +173,7 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
     }
 
     @Override
-    public void showDirect(List<LiveDirectResult.LiveDirectBean> dlist) {
+    public void showDirect(List<LiveDirectResult.LiveCourseListBean> dlist) {
         this.directList = dlist;
         if (directList != null && directList.size() > 0) {
             L.e(directList.size() + "个直播");
@@ -169,7 +181,9 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
             if (directList.get(0) != null) {
                 mRelaDirectLeft.setVisibility(View.VISIBLE);
                 if (directList.get(0).getPictureUrl() != null && directList.get(0).getPictureUrl().length() > 0) {
-                    Glide.with(getActivity()).load(ApiService.picUrl + directList.get(0).getPictureUrl()).into(mImgDirectLeft);
+                    Log.e("picUrl", APP.picUrl + directList.get(0).getPictureUrl());
+
+                    Glide.with(getActivity()).load(APP.picUrl + directList.get(0).getPictureUrl()).into(mImgDirectLeft);
                 } else {
                     if (directList.get(0).getPrice() > 0) {
                         //收费
@@ -182,15 +196,15 @@ public class SchoolFragment extends BaseFragment<SchoolModel> implements SchoolC
             } else {
                 mRelaDirectLeft.setVisibility(View.GONE);
             }
-                 /*   if (directList.get(i).getEffective() == 1) {
-                        mTvDirectLefting.setVisibility(View.VISIBLE);
-                    } else {
-                        mTvDirectLefting.setVisibility(View.GONE);
-                    }*/
+         /*   if (directList.get(i).getEffective() == 1) {
+                mTvDirectLefting.setVisibility(View.VISIBLE);
+            } else {
+                mTvDirectLefting.setVisibility(View.GONE);
+            }*/
             if (directList.get(1) != null) {
                 mRelaDirectRight.setVisibility(View.VISIBLE);
                 if (directList.get(1).getPictureUrl() != null && directList.get(1).getPictureUrl().length() > 0) {
-                    Glide.with(getActivity()).load(ApiService.picUrl + directList.get(1).getPictureUrl()).into(mImgDirectRight);
+                    Glide.with(getActivity()).load(APP.picUrl + directList.get(1).getPictureUrl()).into(mImgDirectRight);
                 } else {
                     if (directList.get(1).getPrice() > 0) {
                         //收费

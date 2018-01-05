@@ -6,15 +6,20 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jjs.Jbase.BaseFragment;
 import com.shixue.app.APP;
 import com.shixue.app.ApiService;
 import com.shixue.app.R;
+import com.shixue.app.ui.bean.AboutUsResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +29,6 @@ import org.xutils.x;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
 
 
 /**
@@ -39,6 +43,9 @@ public class Personal_aboutFragment extends BaseFragment {
     TextView mTvCallPhone;
     @Bind(R.id.tv_msg)
     TextView mTvMsg;
+    @Bind(R.id.imgLogos)
+    ImageView imgLogos;
+    private AboutUsResult aboutUsResult;
 
     @Override
     protected void onCreat() {
@@ -47,8 +54,11 @@ public class Personal_aboutFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        if (APP.userInfo == null) {
+            return;
+        }
         RequestParams params = new RequestParams(ApiService.httpUrl + "projectAction!aboutUs.action");
-        params.addParameter("projectId", APP.projectID);
+        params.addParameter("mobile", APP.userInfo.getBody().getUser().getMobile());
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -56,9 +66,16 @@ public class Personal_aboutFragment extends BaseFragment {
                     JSONObject object = new JSONObject(result);
                     boolean success = object.getBoolean("success");
                     if (success) {
-                        mTvMsg.setText("    "+object.getJSONObject("body").getJSONObject("project").getString("aboutUs"));
+                        Gson gson = new Gson();
+                        aboutUsResult = gson.fromJson(result, AboutUsResult.class);
+                       mTvMsg.setText("    " + aboutUsResult.getBody().getAgent().getAboutUs());
+
+                       // mTvMsg.setText("测试！！！！！！！！！！");
+                     //   Glide.with(getActivity()).load(APP.picUrl + aboutUsResult.getBody().getAgent().getAgentIcon()).into(imgLogos);
+                        Log.e("Personal_aboutFragment", aboutUsResult.getBody().getAgent().getAgentName());
                     }
                 } catch (JSONException e) {
+                    Log.e("Personal_aboutFragment", "解析异常");
                     e.printStackTrace();
                 }
             }
@@ -78,12 +95,8 @@ public class Personal_aboutFragment extends BaseFragment {
 
             }
         });
-        mTvVersionName.setText(APP.versionName);
-        SpannableString ss = new SpannableString(mTvCallPhone.getText());
-        ss.setSpan(new URLSpan("tel:4000081411"), 23, mTvCallPhone.getText().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTvCallPhone.setText(ss);
-        mTvCallPhone.setMovementMethod(LinkMovementMethod.getInstance());
-
+        mTvCallPhone.setText("版本：" + APP.versionName);
+//        mTvCallPhone.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

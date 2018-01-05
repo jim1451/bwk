@@ -101,17 +101,21 @@ public class PractiseFragment extends BaseFragment {
         dataHolder = (context, holder, item, position) -> {
             ((TextView) holder.getView(R.id.item_tv_title)).setText(item.getTestLibraryName());
             ((TextView) holder.getView(R.id.item_tv_msg)).setText(item.getOneWord());
-            ((TextView) holder.getView(R.id.item_tv_size)).setText(item.getTestCount() + "张试卷");
-            Glide.with(getActivity()).load(ApiService.picUrl + item.getPictureUrl()).into((ImageView) holder.getView(R.id.item_img));
-            if (item.getChargeType() == 0) {
+             ((TextView) holder.getView(R.id.item_tv_size)).setText(item.getTestCount() + "张试卷");
+            Glide.with(getActivity()).load(APP.picUrl + item.getPictureUrl()).into((ImageView) holder.getView(R.id.item_img));
+            if (item.getChargeType() == 0) {//免费
                 holder.getView(R.id.item_tv_isFree).setVisibility(View.VISIBLE);
-                holder.getView(R.id.item_tv_isVip).setVisibility(View.GONE);
-            } else {
+                holder.getView(R.id.item_tv_isVipWrite).setVisibility(View.GONE);
+                holder.getView(R.id.item_tv_isVipFace).setVisibility(View.GONE);
+            } else if (item.getChargeType() == 1) {//笔试会员
                 holder.getView(R.id.item_tv_isFree).setVisibility(View.GONE);
-                holder.getView(R.id.item_tv_isVip).setVisibility(View.VISIBLE);
+                holder.getView(R.id.item_tv_isVipWrite).setVisibility(View.VISIBLE);
+                holder.getView(R.id.item_tv_isVipFace).setVisibility(View.GONE);
+            } else if (item.getChargeType() == 2) {//面试会员
+                holder.getView(R.id.item_tv_isFree).setVisibility(View.GONE);
+                holder.getView(R.id.item_tv_isVipWrite).setVisibility(View.GONE);
+                holder.getView(R.id.item_tv_isVipFace).setVisibility(View.VISIBLE);
             }
-
-
         };
         wrapperList = new ArrayList<>();
         for (int i = 0; i < result.getSubjectList().size(); i++) {

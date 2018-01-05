@@ -2,7 +2,6 @@ package com.shixue.app.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,27 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jjs.Jbase.BaseFragment;
 import com.jjs.Jutils.RecyclerView.BaseReHolder;
-import com.jjs.Jutils.RecyclerView.ReItemDivider;
 import com.jjs.Jutils.RecyclerView.SingleReAdpt;
-import com.jjs.Jutils.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shixue.app.APP;
 import com.shixue.app.ApiService;
 import com.shixue.app.R;
+import com.shixue.app.RxSubscribe;
 import com.shixue.app.contract.HomeContract;
 import com.shixue.app.model.HomeModel;
 import com.shixue.app.ui.activity.DetailsFragmentAty;
-import com.shixue.app.ui.activity.ExamTypeMoreAty;
-import com.shixue.app.ui.activity.LoginAty;
+import com.shixue.app.ui.bean.AboutUsResult2;
 import com.shixue.app.ui.bean.ExamInfoResult;
 import com.shixue.app.ui.bean.ExamTypeResult;
 import com.shixue.app.ui.bean.NewsResult;
-import com.shixue.app.utils.HTTPutils;
-import com.shixue.app.utils.MyDialog;
+import com.shixue.app.ui.bean.VersionBean;
 import com.shixue.app.utils.SweetDialog;
 import com.shixue.app.utils.WXshpaeDialog;
 import com.shixue.app.widget.MyScrollview;
@@ -41,6 +39,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -69,31 +69,74 @@ public class HomeFragment extends BaseFragment<HomeModel> implements HomeContrac
     SingleReAdpt examReAdpt;
     int oneCheck = 0;//一级选中
     SweetDialog progess;
+    @Bind(R.id.smartRefresh)
+    SmartRefreshLayout smartRefresh;
 
 
     @Override
     protected void onCreat() {
         setContentView(R.layout.fragment_home);
+
     }
 
     @Override
     public void init() {
+        smartRefresh.setEnableLoadmore(false);
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                smartRefresh.finishRefresh(2000);
+                init();
+            }
+        });
         mModel = new HomeModel(getActivity(), this);
-        if (APP.APP_ID == 10) {
-            //广东成人高考
-            mLlHomeTopMore.setVisibility(View.GONE);
-            mImgHomeTopGdck.setVisibility(View.VISIBLE);
-            mImgHomeTopGdzk.setVisibility(View.GONE);
-        } else if (APP.APP_ID == 11) {
-            //广东自学考试
-            mLlHomeTopMore.setVisibility(View.GONE);
-            mImgHomeTopGdck.setVisibility(View.GONE);
-            mImgHomeTopGdzk.setVisibility(View.VISIBLE);
-        } else {//代理商
-            mLlHomeTopMore.setVisibility(View.VISIBLE);
-            mImgHomeTopGdck.setVisibility(View.GONE);
-            mImgHomeTopGdzk.setVisibility(View.GONE);
+//        if (APP.APP_ID == 10) {
+//            //广东成人高考
+//            mLlHomeTopMore.setVisibility(View.GONE);
+//            mImgHomeTopGdck.setVisibility(View.VISIBLE);
+//            mImgHomeTopGdzk.setVisibility(View.GONE);
+//        } else if (APP.APP_ID == 11) {
+//            //广东自学考试
+//            mLlHomeTopMore.setVisibility(View.GONE);
+//            mImgHomeTopGdck.setVisibility(View.GONE);
+//            mImgHomeTopGdzk.setVisibility(View.VISIBLE);
+//        } else {//代理商
+        mLlHomeTopMore.setVisibility(View.VISIBLE);
+        mImgHomeTopGdck.setVisibility(View.GONE);
+        mImgHomeTopGdzk.setVisibility(View.VISIBLE);
+        //更换首页广告方法、
+        if (APP.userInfo != null) {
+            APP.apiService.getAboutUsResult(APP.userInfo.getBody().getUser().getMobile()).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscribe<AboutUsResult2>() {
+                @Override
+                protected void _onNext(AboutUsResult2 aboutUsResult2) {
+                    Glide.with(getActivity()).load(APP.picUrl + aboutUsResult2.getAgent().getAgentIcon()).placeholder(R.drawable.home_teach_img).into(mImgHomeTopGdzk);
+                }
+
+                @Override
+                protected void _onError(String msg) {
+
+                }
+            });
         }
+        //修改用户版本
+        if (APP.userInfo != null) {
+            APP.apiService.getUpdataVersionbean(APP.userInfo.getBody().getUser().getMobile(), 0, android.os.Build.MODEL, android.os.Build.VERSION.RELEASE, APP.versionName).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscribe<VersionBean>() {
+                @Override
+                protected void _onNext(VersionBean versionBean) {
+                    Log.e("VersionBean", "更新版本成功");
+                }
+
+                @Override
+                protected void _onError(String msg) {
+
+                }
+            });
+        }
+
+
+//        }
         /**
          * 获取首页项目列表
          * */
@@ -167,7 +210,10 @@ public class HomeFragment extends BaseFragment<HomeModel> implements HomeContrac
                 if (newsList.get(position).getWeixinRemark() != null && newsList.get(position).getWeixinRemark().length() > 0 && newsList.get(position).getWeixinCode() != null && newsList.get(position).getWeixinCode().length() > 0) {
                     Glide.with(getActivity()).load(R.drawable.huodong_img_weixin).into(holder.getImageView(R.id.item_img));
                 } else {
-                    Glide.with(getActivity()).load(R.drawable.huodong_img_kecheng).into(holder.getImageView(R.id.item_img));
+//                    .placeholder(R.drawable.huodong_img_kecheng)
+                    Glide.with(getActivity()).load(APP.picUrl + data.getImageUrl()).placeholder(R.drawable.huodong_img_kecheng).into(holder.getImageView(R.id.item_img));
+                    Log.e("newsAdpt", APP.picUrl + data.getImageUrl());
+
                 }
                 holder.getTV(R.id.item_title).setText(data.getMsgName());
                 holder.getTV(R.id.item_msg).setText(data.getOneWord());
@@ -179,6 +225,8 @@ public class HomeFragment extends BaseFragment<HomeModel> implements HomeContrac
                 if (newsList.get(position).getWeixinRemark() != null && newsList.get(position).getWeixinRemark().length() > 0 && newsList.get(position).getWeixinCode() != null && newsList.get(position).getWeixinCode().length() > 0) {
                     new WXshpaeDialog(getActivity()).show(newsList.get(position).getOneWord(), newsList.get(position).getWeixinRemark(), newsList.get(position).getWeixinCode());
                 } else {
+
+                    Log.e("newsList", newsList.get(position).getOneWord() + "   " + newsList.get(position).getMsgContentUrl());
                     DetailsFragmentAty.goHtmlAty(getActivity(), newsList.get(position).getOneWord(), newsList.get(position).getMsgContentUrl());
                 }
             }

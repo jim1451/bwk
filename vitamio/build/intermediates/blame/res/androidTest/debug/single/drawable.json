@@ -1,62 +1,14 @@
 [
     {
-        "merged": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
-        "source": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
+        "merged": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
+        "source": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
     },
     {
-        "merged": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
-        "source": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
+        "merged": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
+        "source": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
     },
     {
-        "merged": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
-        "source": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
-    },
-    {
-        "merged": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
-        "source": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
-    },
-    {
-        "merged": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
-        "source": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
-        "source": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
-    },
-    {
-        "merged": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
-        "source": "D:\\AndroidApp\\BWK\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
-        "source": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
-        "source": "D:\\maiiqAndroid\\newBWKmore\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
-        "source": "D:\\maiiqAndroid\\newBWK\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
-    },
-    {
-        "merged": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
-        "source": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
-    },
-    {
-        "merged": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
-        "source": "C:\\BWkOnLineTeach\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
-        "source": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_progress_horizontal_holo_dark.xml",
-        "source": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_progress_horizontal_holo_dark.xml"
-    },
-    {
-        "merged": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\scrubber_control_selector_holo.xml",
-        "source": "D:\\maiiqAndroid\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\scrubber_control_selector_holo.xml"
+        "merged": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\mediacontroller_button.xml",
+        "source": "C:\\code\\newBWKjsz\\vitamio\\build\\intermediates\\bundles\\debug\\res\\drawable\\mediacontroller_button.xml"
     }
 ]

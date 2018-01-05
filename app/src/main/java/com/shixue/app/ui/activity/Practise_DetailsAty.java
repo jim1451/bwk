@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -97,6 +98,7 @@ public class Practise_DetailsAty extends BaseActivity {
         }
         progess = new SweetDialog(Practise_DetailsAty.this, SweetDialog.PROGRESS_TYPE).setTitleText("加载中...");
         progess.show();
+        Log.e("testId", testId + "");
         APP.apiService.getPractiseDetails(testId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,6 +111,9 @@ public class Practise_DetailsAty extends BaseActivity {
 
                     @Override
                     protected void _onError(String msg) {
+                        Log.e("testId", msg + "");
+
+
                         APP.mToast(msg);
                         progess.cancel();
                     }
@@ -341,7 +346,7 @@ public class Practise_DetailsAty extends BaseActivity {
         //控制图片的显示
         if (ecList.get(showNum).getExerciseContentPicture() != null && !ecList.get(showNum).getExerciseContentPicture().equals("")) {
             mImgTitleImg.setVisibility(View.VISIBLE);
-            Glide.with(this).load(ApiService.picUrl + ecList.get(showNum).getExerciseContentPicture()).into(mImgTitleImg);
+            Glide.with(this).load(APP.picUrl + ecList.get(showNum).getExerciseContentPicture()).into(mImgTitleImg);
         } else {
             mImgTitleImg.setVisibility(View.GONE);
         }
@@ -380,7 +385,7 @@ public class Practise_DetailsAty extends BaseActivity {
                 }
                 mTvAnswerMsg.setText(ecList.get(showNum).getAnswerAnalysis());//显示答案解析
                 if (ecList.get(showNum).getExerciseAnswerPicture() != null && ecList.get(showNum).getExerciseAnswerPicture().length() > 0) {
-                    Glide.with(this).load(ApiService.picUrl + ecList.get(showNum).getExerciseAnswerPicture()).into(mImgAnswerPictrue);
+                    Glide.with(this).load(APP.picUrl + ecList.get(showNum).getExerciseAnswerPicture()).into(mImgAnswerPictrue);
                     mImgAnswerPictrue.setVisibility(View.VISIBLE);
                 } else {
                     mImgAnswerPictrue.setVisibility(View.GONE);
@@ -418,7 +423,7 @@ public class Practise_DetailsAty extends BaseActivity {
                 mLl_answer.setVisibility(View.VISIBLE);
                 mTvAnswerMsg.setText(ecList.get(showNum).getAnswerAnalysis());
                 if (ecList.get(showNum).getExerciseAnswerPicture() != null && ecList.get(showNum).getExerciseAnswerPicture().length() > 0) {
-                    Glide.with(this).load(ApiService.picUrl + ecList.get(showNum).getExerciseAnswerPicture()).into(mImgAnswerPictrue);
+                    Glide.with(this).load(APP.picUrl + ecList.get(showNum).getExerciseAnswerPicture()).into(mImgAnswerPictrue);
                     mImgAnswerPictrue.setVisibility(View.VISIBLE);
                 } else {
                     mImgAnswerPictrue.setVisibility(View.GONE);

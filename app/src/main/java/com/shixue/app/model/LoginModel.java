@@ -29,7 +29,9 @@ public class LoginModel extends BaseModel<LoginContract.View> implements LoginCo
 
     @Override
     public void login(String smsCode, final String phone, int cityID, int provinceID, int examType, String examDirection) {
-        if (!APP.isDebug) {
+
+
+        if (!APP.isDebug && !APP.isTry) {
             if (phone.length() != 11) {
                 mView.showToast("请输入11位数手机号");
                 return;

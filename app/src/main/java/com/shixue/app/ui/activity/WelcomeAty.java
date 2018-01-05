@@ -18,13 +18,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
 /**
  * 作者：刘荣芳
  * QQ：3236037401
- *
- *
- *
  */
 
 public class WelcomeAty extends BaseActivity<WelcomeModel> implements WelcomeContract.View {
@@ -46,6 +42,7 @@ public class WelcomeAty extends BaseActivity<WelcomeModel> implements WelcomeCon
         init();
         APP.getWindowInfo(this);
     }
+
     @Override
     public void showToast(String msg) {
 
@@ -79,7 +76,7 @@ public class WelcomeAty extends BaseActivity<WelcomeModel> implements WelcomeCon
 
     @OnClick(R.id.tv_toLogin)
     public void onClick() {
-        APP.shared.edit().putBoolean("isFirst",false).commit();
+        APP.shared.edit().putBoolean("isFirst", false).commit();
         goActivity(MainFragmentActivity.class);
         finish();
     }

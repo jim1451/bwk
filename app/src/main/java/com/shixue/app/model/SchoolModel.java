@@ -15,8 +15,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * 本页：
- * Created by jjs on 2016-11-25.
- */
+  */
 
 public class SchoolModel extends BaseModel<SchoolContract.View> implements SchoolContract.Model {
 

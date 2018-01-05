@@ -52,6 +52,10 @@ public class FlowFragment extends BaseFragment {
     @Override
     public void init() {
         Log.e("FlowFragment", APP.projectID + "  " + APP.ProvinceID);
+
+        if (APP.userInfo == null || APP.userInfo.getBody() == null) {
+            return;
+        }
         APP.apiService.getStepList(APP.userInfo.getBody().getUser().getMobile(), 1, APP.ProvinceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -152,8 +156,8 @@ public class FlowFragment extends BaseFragment {
             detailsAdpt.setOnItemClickListener(new SingleReAdpt.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-
-                    DetailsFragmentAty.goHtmlAty(getActivity(), titleList.get(checkType).getProjectStepList().get(position).getStepName(), ApiService.picUrl + titleList.get(checkType).getProjectStepList().get(position).getHowdoUrl());
+                    Log.e("流程：", APP.picUrl + titleList.get(checkType).getProjectStepList().get(position).getHowdoUrl());
+                    DetailsFragmentAty.goHtmlAty(getActivity(), titleList.get(checkType).getProjectStepList().get(position).getStepName(),  APP.htmlUrl + titleList.get(checkType).getProjectStepList().get(position).getHowdoUrl());
                 }
 
                 @Override

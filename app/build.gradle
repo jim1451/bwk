@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 android {
-    signingConfigs {
-//        release {
-//            keyAlias 'shixue'
-//            keyPassword 'shixue@123'
-//            storeFile file('D:/maiiqAndroid/newBWKmore/newBWKjsz/appkey/shixue.jks')
-//            storePassword 'shixue@123'
-//        }
-    }
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
@@ -16,8 +8,8 @@ android {
         applicationId "com.shixue.online.app"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 320
-        versionName "3.2.0"
+        versionCode 100
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -98,5 +90,8 @@ dependencies {
     //  compile files('libs/gensee_expression.jar')
     // compile files('libs/gensee_rtmpplayer.jar')
     compile project(':libresource')
+    //智能刷新头部
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2-alpha-5'
+
 
 }

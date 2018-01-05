@@ -29,7 +29,7 @@ public class MainModel extends BaseModel<MainContract.View> implements MainContr
 
     @Override
     public void getCity() {
-        APP.apiService.getCityList()
+        APP.apiService.getCityList("")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<CityResult>() {

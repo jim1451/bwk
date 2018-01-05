@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="110px"
-        android:src="@drawable/login_logo" />
+        android:src="@drawable/mainlogo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,9 @@
         android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="60px"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="60px"
+        android:layout_marginTop="60px"
         android:background="@drawable/selector_btn_login"
         android:gravity="center"
         android:padding="30px"
@@ -104,24 +106,42 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/TextSize16" />
 
-    <TextView
-        android:id="@+id/tv_try"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60px"
         android:layout_marginRight="60px"
-        android:background="@drawable/selector_btn_login"
-        android:gravity="center"
-        android:padding="30px"
-        android:text="试   用"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/TextSize16" />
+        android:layout_marginTop="24px">
+
+        <LinearLayout
+            android:id="@+id/layoutTry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我要试用"
+                android:textColor="#FF54A8E6"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#FF54A8E6" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
@@ -148,6 +168,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:visibility="gone"
         android:padding="50px"
         android:text="copyright © 伴我考 版权所有"
         android:textColor="@color/colorHint" />

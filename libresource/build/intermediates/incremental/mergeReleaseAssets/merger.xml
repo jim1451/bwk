@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\BWkOnLineTeach\newBWKjsz\libresource\assets"/><source path="C:\BWkOnLineTeach\newBWKjsz\libresource\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="C:\BWkOnLineTeach\newBWKjsz\libresource\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\code\newBWKjsz\libresource\assets"/><source path="C:\code\newBWKjsz\libresource\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="C:\code\newBWKjsz\libresource\src\release\assets"/></dataSet></merger>

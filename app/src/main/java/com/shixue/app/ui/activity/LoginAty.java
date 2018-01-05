@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jjs.Jbase.BaseActivity;
@@ -33,6 +35,14 @@ public class LoginAty extends BaseActivity<LoginModel> implements LoginContract.
     EditText mEditSmsCode;
     @Bind(R.id.tv_getSms)
     TextView mTvGetSms;
+    @Bind(R.id.img_back)
+    ImageView imgBack;
+    @Bind(R.id.tv_login)
+    TextView tvLogin;
+    @Bind(R.id.layoutTry)
+    LinearLayout layoutTry;
+    @Bind(R.id.tv_Agreement)
+    TextView tvAgreement;
 
 
     @Override
@@ -58,7 +68,6 @@ public class LoginAty extends BaseActivity<LoginModel> implements LoginContract.
 
     @Override
     public void LoginSuccess(String msg) {
-        APP.mToast("登陆成功");
         APP.isSMSLogin = true;
         //保存登陆相关信息
         APP.shared.edit().putBoolean("isLogin", true).putString("phone", APP.userInfo.getBody().getUser().getMobile()).commit();
@@ -81,32 +90,31 @@ public class LoginAty extends BaseActivity<LoginModel> implements LoginContract.
         APP.mToast(msg);
     }
 
-    @OnClick({R.id.img_back, R.id.tv_getSms, R.id.tv_login, R.id.tv_Agreement})
+    @OnClick({R.id.img_back, R.id.tv_getSms, R.id.tv_login, R.id.tv_Agreement, R.id.layoutTry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
                 break;
             case R.id.tv_getSms:
+                APP.hasNetwork();
                 if (!mTvGetSms.getText().toString().trim().equals("重新获取") && !mTvGetSms.getText().toString().trim().equals("获取验证码")) {
                     return;
                 }
                 mModel.sendSMS(mEditPhone.getText().toString().trim());
                 break;
             case R.id.tv_login:
+                APP.isTry = false;
                 mModel.login(mEditSmsCode.getText().toString().trim(), mEditPhone.getText().toString().trim(), APP.CityID, APP.APP_ID, APP.examType, APP.examName);
                 break;
             case R.id.tv_Agreement:
                 //协议内容。
                 DetailsFragmentAty.goHtmlAty(this, "伴我考客服协议", "serviceAgreement.html");
                 break;
-            case R.id.tv_try://试用
-
-
-
+            case R.id.layoutTry://试用
+                APP.isTry = true;
+                mModel.login("123456", "18818800000", APP.CityID, APP.APP_ID, APP.examType, APP.examName);
                 break;
-
         }
     }
-
 }

@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +27,7 @@ import com.shixue.app.RxSubscribe;
 import com.shixue.app.contract.MainContract;
 import com.shixue.app.model.MainModel;
 import com.shixue.app.ui.bean.ExamInfoResult;
+import com.shixue.app.ui.bean.SingleVipResult;
 import com.shixue.app.ui.bean.VersionResult;
 import com.shixue.app.ui.bean.WXshapeResult;
 import com.shixue.app.ui.fragment.FlowFragment;
@@ -36,6 +40,9 @@ import com.shixue.app.utils.L;
 import com.shixue.app.utils.MyDialog;
 import com.shixue.app.utils.SweetDialog;
 import com.shixue.app.utils.WXshpaeDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -147,7 +154,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
          * 查询版本更新数据
          */
         Log.e("版本--", APP.projectID + "");
-        APP.apiService.getVersion(APP.projectID)
+        APP.apiService.getVersion(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<VersionResult>() {
@@ -155,19 +162,10 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
                     protected void _onNext(VersionResult versionResult) {
                         Log.e("版本", versionResult.getSoftAndroidVersion() + "   " + APP.versionName);
                         if (!versionResult.getSoftAndroidVersion().equals(APP.versionName + "")) {//只要版本不同即进行更新
-                            new SweetDialog(MainFragmentActivity.this, SweetDialog.WARNING_TYPE)
-                                    .setTitleText("发现新版本")
-                                    .setContentText("是否立即前往下载更新")
-                                    .setConfirmText("前往下载", sweetDialog -> {
-                                        Intent intent = new Intent();
-                                        intent.setAction("android.intent.action.VIEW");
-                                        Uri content_url = Uri.parse(APP.APPupdataUrl);
-                                        intent.setData(content_url);
-                                        startActivity(intent);
-                                        sweetDialog.cancel();
-                                    }).show();
-
+                            showUpdataAPP();
                         }
+                        updateAPP(versionResult);
+
                     }
 
                     @Override
@@ -176,6 +174,37 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
                     }
                 });
 
+
+        //  获取用户会员信息
+        if (APP.userInfo != null) {
+            APP.apiService.getSingleVipResult("1", APP.userInfo.getBody().getUser().getMobile(), APP.examType + "").subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(new RxSubscribe<SingleVipResult>() {
+                @Override
+                protected void _onNext(SingleVipResult singleVipResult) {
+                    APP.SingleVipBean = singleVipResult;
+                    if (singleVipResult.getVipInfoList() == null || singleVipResult.getVipInfoList().size() == 0) {
+                        APP.singleVip = 0;
+                    } else if (singleVipResult.getVipInfoList().size() == 1) {
+                        APP.singleVip = 1;
+                        APP.singleVipType = singleVipResult.getVipInfoList().get(0).getChargeType();
+                        APP.vipStatus = singleVipResult.getVipInfoList().get(0).getVipStatus();
+
+                    } else if (singleVipResult.getVipInfoList().size() == 2) {
+                        APP.singleVip = 2;//两种会员都开通了
+
+                    }
+
+                }
+
+                @Override
+                protected void _onError(String msg) {
+
+                }
+            });
+
+        }
+
+
         //首页-流程-课堂-练题-个人
         framList.clear();
         addAllFragment(R.id.fram_main, new HomeFragment(), new FlowFragment(), new SchoolFragment(), new PractiseFragment(), new PersonalFragment());
@@ -183,7 +212,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
             for (int i = 0; i < group.getChildCount(); i++) {
                 if (checkedId == group.getChildAt(i).getId()) {
                     showFragment(i);
-                    if (i == 0) {
+                    if (i == 0 || i == 2 || i == 1) {//添加流程中显示城市
                         mTvTitleCity.setVisibility(View.VISIBLE);
                     } else {
                         mTvTitleCity.setVisibility(View.GONE);
@@ -195,11 +224,53 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
         ((RadioButton) mRgMain.getChildAt(0)).setChecked(true);
     }
 
+    private void showUpdataAPP() {
+        new SweetDialog(MainFragmentActivity.this, SweetDialog.WARNING_TYPE)
+                .setTitleText("发现新版本")
+                .setContentText("是否立即前往下载更新")
+                .setConfirmText("前往下载", sweetDialog -> {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(APP.APPupdataUrl);
+                    intent.setData(content_url);
+                    startActivity(intent);
+                    sweetDialog.cancel();
+                }).show();
+    }
+
+    private void updateAPP(VersionResult versionResult) {
+//        //服务器版本
+//        Log.e("updateAPP", versionResult.getSoftAndroidVersion());
+////        int newVersion = Integer.parseInt(versionResult.getSoftAndroidVersion());
+//        String[] contentARR = versionResult.getSoftAndroidVersion().split(".");
+//
+//        int oneVersion = Integer.parseInt(contentARR[0]);
+//        int twoVersion = Integer.parseInt(contentARR[1]);
+//        int threeVersion = Integer.parseInt(contentARR[2]);
+//        //本地版本
+//        int oldVersion = APP.versionCode;
+//
+//
+//        Log.e("updateAPP", oldVersion + "");
+//        int one = oldVersion % 10;
+//        int two = oldVersion / 10 % 10;
+//        int three = oldVersion / 100;
+//        if (newVersion > oldVersion) {
+//            //需要更新
+//            if (threeVersion > three || threeVersion == three && twoVersion > two) {//强制更新
+//                showUpdataAPP();
+//            } else {//选择更新
+//                showUpdataAPP();
+//            }
+//        } else {
+//            Log.e("updateAPP", "异常");
+//        }
+    }
+
     public void login() {
         HTTPutils.login(APP.shared.getString("phone", ""), new HTTPutils.OnTaskClick() {
             @Override
             public void onSuccess(Object o) {
-                showToast("登陆成功！" + APP.shared.getString("phone", ""));
                 mDialog.dismiss();
                 init();
             }
@@ -232,7 +303,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
             for (int i = 0; i < APP.examTypeList.size(); i++) {
                 for (int j = 0; j < APP.examTypeList.get(i).getProjectList().size(); j++) {
                     if (APP.projectID == APP.examTypeList.get(i).getProjectList().get(j).getProjectId()) {
-                        Glide.with(MainFragmentActivity.this).load(ApiService.picUrl + APP.examTypeList.get(i).getProjectList().get(j).getProjectPicture()).into(mImgTitleExamType);
+                        Glide.with(MainFragmentActivity.this).load(APP.picUrl + APP.examTypeList.get(i).getProjectList().get(j).getProjectPicture()).into(mImgTitleExamType);
                         mTvTitleExamType.setText(APP.examTypeList.get(i).getProjectList().get(j).getProjectName());
                         break;
                     }
@@ -251,16 +322,16 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
 
             @Override
             public void onError(String ex) {
-                APP.mToast(ex);
+//                APP.mToast(ex);
             }
         });
     }
 
     public void updateCity() {
-        mTvTitleCity.setText(HTTPutils.getAddressName());
+        mTvTitleCity.setText(HTTPutils.getAddressName());//获取省份城市列表
     }
 
-    private void setExamTypeName() {
+    private void setExamTypeName() {//一进来就要获取的内容
         for (int i = 0; i < APP.examInfoBean.getExamTypeList().size(); i++) {
             if (APP.examInfoBean.getExamTypeList().get(i).getExamTypeId() == APP.examType) {
                 if (APP.examType == APP.examInfoBean.getExamTypeList().get(i).getExamTypeId()) {
@@ -274,9 +345,9 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
 
     @Override
     protected void onResult(int request, Intent data) {
-        if (request == 1) {
+        if (request == 1) {//用户更新城市后
             updateCity();
-            ((HomeFragment) framList.get(0)).init();
+            ((HomeFragment) framList.get(0)).init();//初始化
             ((FlowFragment) framList.get(1)).init();
             ((PersonalFragment) framList.get(4)).updateCity();
         }
@@ -287,8 +358,8 @@ public class MainFragmentActivity extends BaseFragmentActivity implements MainCo
         switch (view.getId()) {
             case R.id.ll_title_Type://项目二级分类
                 //考试方向
-                HTTPutils.showExamListDialog(MainFragmentActivity.this, mTvTitleExamType.getText().toString().trim(), APP.examInfoBean.getExamTypeList(), myDialog -> {
-
+                HTTPutils.showExamListDialog(MainFragmentActivity.this, "会计在线学教师证", APP.examInfoBean.getExamTypeList(), myDialog -> {
+                    mTvTitleExamType.setText(APP.examName);
                 });
                 break;
             case R.id.tv_title_city:

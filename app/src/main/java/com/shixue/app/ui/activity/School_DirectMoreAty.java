@@ -66,13 +66,13 @@ public class School_DirectMoreAty extends BaseActivity {
 
     }
 
-    private void getDirectListOK(List<LiveDirectResult.LiveDirectBean> directList) {
+    private void getDirectListOK(List<LiveDirectResult.LiveCourseListBean> directList) {
         mRvDirectList.setLayoutManager(new LinearLayoutManager(this));
-        mReAdpt = new SingleReAdpt<LiveDirectResult.LiveDirectBean>(this, R.layout.recycler_direct_list, directList) {
+        mReAdpt = new SingleReAdpt<LiveDirectResult.LiveCourseListBean>(this, R.layout.recycler_direct_list, directList) {
             @Override
-            protected void BindData(BaseReHolder holder, int position, LiveDirectResult.LiveDirectBean data) {
+            protected void BindData(BaseReHolder holder, int position, LiveDirectResult.LiveCourseListBean data) {
                 if (data.getPictureUrl() != null && data.getPictureUrl().length() > 0) {
-                    Glide.with(School_DirectMoreAty.this).load(ApiService.picUrl + data.getPictureUrl()).into(holder.getImageView(R.id.item_img));
+                    Glide.with(School_DirectMoreAty.this).load(APP.picUrl + data.getPictureUrl()).into(holder.getImageView(R.id.item_img));
                 } else {
                     if (data.getPrice() > 0) {
                         Glide.with(School_DirectMoreAty.this).load(R.drawable.zhibo_img_vip).into(holder.getImageView(R.id.item_img));
@@ -85,11 +85,17 @@ public class School_DirectMoreAty extends BaseActivity {
                 holder.getTV(R.id.item_title).setText(data.getLiveCourseName());
                 //  holder.getTV(R.id.item_time).setText("时间未设置！！！！！！");取消
                 holder.getTV(R.id.item_msg).setText(data.getOneWord());//一句话描述
-                if (data.getPrice() > 0) {
-                    holder.getTV(R.id.item_price).setText("￥" + data.getPrice());
-                } else {
+                if (data.getChargeType() == 0) {//免费
                     holder.getTV(R.id.item_price).setText("免费");
+
+                } else if (data.getChargeType() == 1) {//笔试
+                    holder.getTV(R.id.item_price).setText("会员");
+
+                } else if (data.getChargeType() == 2) {//面试
+                    holder.getTV(R.id.item_price).setText("面试会员");
+
                 }
+
 
              /*   if (data.getEffective() == 1) {
                     holder.getView(R.id.tv_isPlay).setVisibility(View.VISIBLE);

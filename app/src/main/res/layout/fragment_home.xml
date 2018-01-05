@@ -1,84 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.shixue.app.widget.MyScrollview
-        android:id="@+id/scroll"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="-1dp"
-        android:background="@color/colorWhite">
+        app:srlEnablePreviewInEditMode="true"
+        app:srlPrimaryColor="#FFEBEBEB">
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <com.shixue.app.widget.MyScrollview
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginBottom="-1dp"
+            android:background="@color/colorWhite">
 
-            <com.zhy.autolayout.AutoRelativeLayout
+            <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:id="@+id/ll_home_top_more"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
 
-                    <TextView
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:id="@+id/ll_home_top_more"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="20px"
-                        android:text="说明：选择学习项目后，平台内容会同步切换"
-                        android:textColor="#F88437"
-                        android:textSize="@dimen/TextSize12"/>
+                        android:orientation="vertical">
 
-                    <include layout="@layout/line"/>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_examType"
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="20px"
+                            android:text="说明：选择学习项目后，平台内容会同步切换"
+                            android:textColor="#F88437"
+                            android:textSize="@dimen/TextSize12" />
+
+                        <include layout="@layout/line" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_examType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+                    </com.zhy.autolayout.AutoLinearLayout>
+
+                    <ImageView
+                        android:id="@+id/img_home_top_gdck"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/bg"
+                        android:src="@drawable/pic_home_gdck"
+                        android:visibility="invisible" />
 
-                    </android.support.v7.widget.RecyclerView>
-                </com.zhy.autolayout.AutoLinearLayout>
+                    <ImageView
+                        android:id="@+id/img_home_top_gdzk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg"
+                        android:src="@drawable/home_teach_img" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
-                <ImageView
-                    android:id="@+id/img_home_top_gdck"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/pic_home_gdck"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/img_home_top_gdzk"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/pic_home_gdzk"
+                    android:layout_height="wrap_content"
+                    android:background="#E9F1F7"
+                    android:drawableLeft="@drawable/icon09"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:padding="20px"
+                    android:text="新闻"
+                    android:textColor="@color/color333"
+                    android:textSize="@dimen/TextSize16" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_notice"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.zhy.autolayout.AutoRelativeLayout>
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#E9F1F7"
-                android:drawableLeft="@drawable/icon09"
-                android:drawablePadding="20px"
-                android:gravity="center_vertical"
-                android:padding="20px"
-                android:text="活动公告"
-                android:textColor="@color/color333"
-                android:textSize="@dimen/TextSize16"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_notice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-
-        </com.zhy.autolayout.AutoLinearLayout>
-    </com.shixue.app.widget.MyScrollview>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.shixue.app.widget.MyScrollview>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </com.zhy.autolayout.AutoLinearLayout>

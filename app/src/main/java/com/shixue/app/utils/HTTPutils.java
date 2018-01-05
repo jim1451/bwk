@@ -11,11 +11,13 @@ import com.google.gson.Gson;
 import com.jjs.Jutils.RecyclerView.BaseReHolder;
 import com.jjs.Jutils.RecyclerView.ReItemDivider;
 import com.jjs.Jutils.RecyclerView.SingleReAdpt;
+import com.jjs.Jutils.ToastUtils;
 import com.shixue.app.APP;
 import com.shixue.app.R;
 import com.shixue.app.RxSubscribe;
 import com.shixue.app.ui.activity.DetailsFragmentAty;
 import com.shixue.app.ui.activity.MainFragmentActivity;
+import com.shixue.app.ui.activity.VipDetailsActivity;
 import com.shixue.app.ui.bean.ExamInfoResult;
 import com.shixue.app.ui.bean.ExamTypeResult;
 import com.shixue.app.ui.bean.UserInfoBean;
@@ -129,6 +131,7 @@ public class HTTPutils {
      * 登陆方法
      */
     public static void login(String mobile, OnTaskClick taskClick) {
+        APP.hasNetwork();
         RequestParams params = new RequestParams(httpUrl + "loginAction!login.action");
         params.addParameter("webchat", 0);
         params.addParameter("systemVersion", android.os.Build.VERSION.RELEASE);
@@ -137,6 +140,8 @@ public class HTTPutils {
         params.addParameter("equipmentType", 0);//设备类型。0安卓
         params.addParameter("password", "1234");//密码？？
         params.addParameter("projectId", "1");//代理商版本所有项目id （APP.projectID）都是固定的为1
+        Log.e("login", android.os.Build.VERSION.RELEASE + "  " + android.os.Build.MODEL + "   " + APP.versionName);
+
 //        params.addParameter("provinceId", APP.ProvinceID);
 //        params.addParameter("cityId", APP.CityID);
 //        params.addParameter("examTypeId", APP.examType);
@@ -262,9 +267,8 @@ public class HTTPutils {
                     JSONObject object = new JSONObject(result);
                     boolean success = object.getBoolean("success");
                     if (success) {
-                        APP.userInfo = new Gson().fromJson(object.getJSONObject("body").getJSONObject("user").toString(), UserInfoBean.class);
+                        APP.userInfo = new Gson().fromJson(result, UserInfoBean.class);
                         taskClick.onSuccess("");
-
                     } else {
                         taskClick.onError(object.getString("msg") + "");
                     }
@@ -307,7 +311,8 @@ public class HTTPutils {
                     JSONObject object = new JSONObject(result);
                     boolean success = object.getBoolean("success");
                     if (success) {
-                        APP.userInfo = new Gson().fromJson(object.getJSONObject("body").getJSONObject("user").toString(), UserInfoBean.class);
+                        APP.userInfo = new Gson().fromJson(result, UserInfoBean.class);
+//                        APP.userInfo = new Gson().fromJson(object.getJSONObject("body").getJSONObject("user").toString(), UserInfoBean.class);
                         taskClick.onSuccess("");
                     } else {
                         taskClick.onError(object.getString("msg") + "");
@@ -411,7 +416,8 @@ public class HTTPutils {
     public static void getVipBean(String mobile, int projectId, OnBooleanClick booleanClick) {
         RequestParams params = new RequestParams(httpUrl + "loginAction!vipInfo.action");
         params.addParameter("mobile", mobile);
-        params.addParameter("projectId", projectId);
+        params.addParameter("projectId", 1);
+        Log.e("vip", mobile);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -420,34 +426,40 @@ public class HTTPutils {
                     JSONObject object = new JSONObject(result);
                     boolean success = object.getBoolean("success");
                     if (success) {
-                        APP.vipBean = new Gson().fromJson(object.getJSONObject("body").getJSONObject("userProject").toString(), VipBean.class);
+                        APP.vipBean = new Gson().fromJson(result, VipBean.class);
 
-                        try {
-                            long dateVip = format.parse(APP.vipBean.getSvipDate()).getTime();
-                            long dateThis = format.parse(APP.vipBean.getSysDate()).getTime();//当前系统时间
-                            long date = dateVip - dateThis;//计算到期时间和当前时间的差值
 
-                            if (date > 0) {
-                                //如果vip大于现在时间，说明vip有效
-                                int vipday = (int) (date / 1000 / 60 / 60 / 24);//计算会员的剩余天数
-                                APP.vipDay = vipday;
-                                APP.isVip = true;
-                                booleanClick.onSuccess(true);
-                            } else {
-                                APP.vipBean = null;
-                                APP.vipDay = 0;
-                                APP.isVip = false;
-                                booleanClick.onSuccess(false);
+//                        try {
+//                            long dateVip = format.parse(APP.vipBean.getSvipDate()).getTime();
+//                            long dateThis = format.parse(APP.vipBean.getSysDate()).getTime();//当前系统时间
+//                            long date = dateVip - dateThis;//计算到期时间和当前时间的差值
+//
+//                            if (date > 0) {
+//                                //如果vip大于现在时间，说明vip有效
+//                                int vipday = (int) (date / 1000 / 60 / 60 / 24);//计算会员的剩余天数
+//                                APP.vipDay = vipday;
+//                                APP.isVip = true;
+//                                booleanClick.onSuccess(true);
+//                            } else {
+//                                APP.vipBean = null;
+//                                APP.vipDay = 0;
+//                                APP.isVip = false;
+//                                booleanClick.onSuccess(false);
+//                            }
+//
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                            APP.vipBean = null;
+//                            APP.vipDay = 0;
+//                            APP.isVip = false;
+//                            booleanClick.onSuccess(false);
+//                        }
+                        for (int i = 0; i < APP.vipBean.getBody().getVipInfoList().size(); i++) {
+                            if (APP.vipBean.getBody().getVipInfoList().get(i).getVipStatus() == 1) {
+                                APP.isVip = true;//只要有一项是存在Vip的那就显示
                             }
-
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                            APP.vipBean = null;
-                            APP.vipDay = 0;
-                            APP.isVip = false;
-                            booleanClick.onSuccess(false);
                         }
-
+                        booleanClick.onSuccess(true);
                     } else {
                         APP.vipBean = null;
                         APP.isVip = false;
@@ -513,7 +525,7 @@ public class HTTPutils {
     }
 
     public static void getExamTypeList(OnTaskClick taskClick) {
-        APP.apiService.getExamTypeList()
+        APP.apiService.getExamTypeList("")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<ExamTypeResult>() {
@@ -567,17 +579,15 @@ public class HTTPutils {
                 });
     }
 
-    public static void showGOvipDialog(Context context) {
+    public static void showGOvipDialog(Context context, String titleText, String ConfirmText) {
         new SweetDialog(context, SweetDialog.WARNING_TYPE)
-                .setTitleText("请先开通会员")
-                .setConfirmText("开通会员", new SweetDialog.OnSweetClick() {
+                .setTitleText(titleText)//您尚未开通本学段的会员
+                .setConfirmText(ConfirmText, new SweetDialog.OnSweetClick() {
                     @Override
                     public void onClick(SweetDialog sweetDialog) {
                         // Intent intent = new Intent(context, OpenVipActivity.class);
                         // context.startActivity(intent);
-                        Intent vipIntent = new Intent(context, DetailsFragmentAty.class);
-                        vipIntent.putExtra("type", "vip");
-                        vipIntent.putExtra("name", "会员中心");
+                        Intent vipIntent = new Intent(context, VipDetailsActivity.class);
                         context.startActivity(vipIntent);
                     }
                 })
@@ -589,6 +599,7 @@ public class HTTPutils {
 
     public static void showExamListDialog(Context context, String title, List<ExamInfoResult.ProjectBean.ExamTypeListBean> list,
                                           MyDialog.OnCheckListener checkListener) {
+        final int[] showNum = {0};
         if (list == null || list.size() < 1) {
             Log.e("myDialog__", "未弹出");
 
@@ -619,10 +630,18 @@ public class HTTPutils {
                     SingleReAdpt reAdpt = new SingleReAdpt<ExamInfoResult.ProjectBean.ExamTypeListBean>(context, R.layout.recycler_item_list, list) {
                         @Override
                         protected void BindData(BaseReHolder holder, int position1, ExamInfoResult.ProjectBean.ExamTypeListBean data) {
-                            if (position1 == twoCheck) {
-                                holder.getImgV(R.id.item_check).setSrc(R.drawable.icon06);
+                            if (showNum[0] == 0) {
+                                if (position1 == (APP.examType - 3)) {
+                                    holder.getImgV(R.id.item_check).setSrc(R.drawable.icon06);
+                                } else {
+                                    holder.getImgV(R.id.item_check).setSrc(R.drawable.icon05);
+                                }
                             } else {
-                                holder.getImgV(R.id.item_check).setSrc(R.drawable.icon05);
+                                if (position1 == twoCheck) {
+                                    holder.getImgV(R.id.item_check).setSrc(R.drawable.icon06);
+                                } else {
+                                    holder.getImgV(R.id.item_check).setSrc(R.drawable.icon05);
+                                }
                             }
                             holder.getTV(R.id.item_name).setText(data.getExamTypeName());
                         }
@@ -630,6 +649,7 @@ public class HTTPutils {
                     reAdpt.setOnItemClickListener(new SingleReAdpt.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view1, int position1) {
+                            showNum[0] = 1;
                             twoCheck = position1;
                             reAdpt.notifyDataSetChanged();
                         }
@@ -642,6 +662,11 @@ public class HTTPutils {
                     rv.addItemDecoration(new ReItemDivider(context, context.getResources().getColor(R.color.colorLine), ReItemDivider.Orientation.VERTICAL));
                     rv.setAdapter(reAdpt);
                 }).setCheckTxt("确定", (myDialog) -> {
+            if (showNum[0] == 0) {
+                ToastUtils.create(context).setText("已经是改考试类型，不需要重复启动哦！");
+
+                return;
+            }
 
             L.e("刚触发");
             checkListener.OnCheck(myDialog);
@@ -651,6 +676,8 @@ public class HTTPutils {
             } else {
                 APP.changeType = false;
             }
+
+
             APP.projectID = APP.examInfoBean.getProjectId();
             APP.examType = APP.examInfoBean.getExamTypeList().get(twoCheck).getExamTypeId();
             APP.examName = APP.examInfoBean.getExamTypeList().get(twoCheck).getExamTypeName();

@@ -76,13 +76,13 @@
                 android:id="@+id/item_isFree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_line_orange"
+                android:background="@drawable/shape_line_green"
                 android:paddingBottom="5px"
                 android:paddingLeft="10px"
                 android:paddingRight="10px"
                 android:paddingTop="5px"
-                android:text="免费试学"
-                android:textColor="#f88437"
+                android:text="免费"
+                android:textColor="#059b76"
                 android:textSize="@dimen/TextSize11"/>
 
             <TextView

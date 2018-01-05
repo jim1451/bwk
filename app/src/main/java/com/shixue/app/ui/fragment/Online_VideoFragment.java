@@ -1,5 +1,6 @@
 package com.shixue.app.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
@@ -24,6 +27,7 @@ import com.jjs.Jutils.RecyclerView.DataHolder;
 import com.jjs.Jutils.RecyclerView.LayoutWrapper;
 import com.jjs.Jutils.RecyclerView.SingleReAdpt;
 import com.jjs.Jutils.RecyclerView.SuperAdapter;
+import com.jjs.Jutils.ToastUtils;
 import com.shixue.app.APP;
 import com.shixue.app.R;
 import com.shixue.app.database.DownloadService;
@@ -39,6 +43,7 @@ import com.shixue.app.utils.FileIoUtils;
 import com.shixue.app.utils.HTTPutils;
 import com.shixue.app.utils.L;
 import com.shixue.app.utils.MD5Utils;
+import com.shixue.app.utils.interval_click_utils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.litepal.crud.DataSupport;
@@ -63,7 +68,7 @@ import cn.aigestudio.downloader.bizs.DLManager;
  * Created by jjs on 2016-12-02.
  */
 
-public class Online_VideoFragment extends BaseFragment {
+public class Online_VideoFragment extends BaseFragment2 {
     @Bind(R.id.rv_online_video)
     RecyclerView mRvOnlineVideo;
     @Bind(R.id.tv_allDown)
@@ -79,14 +84,14 @@ public class Online_VideoFragment extends BaseFragment {
 
 
     LinkedHashMap<String, ProgressBar> barMap;
-    ActionSheetDialog sheetDialog;
+    private ActionSheetDialog sheetDialog;
     SuperAdapter superAdapter;
-
 
     @Override
     protected void onCreat() {
         setContentView(R.layout.fragment_onlinevideo);
     }
+
 
     @Override
     protected void init() {
@@ -94,6 +99,11 @@ public class Online_VideoFragment extends BaseFragment {
         AppUtils.getInstance(getActivity());
         barMap = new LinkedHashMap<String, ProgressBar>();
         result = ((School_Online_DetailsAty) getActivity()).result;
+
+        Log.e("Online_VideoFragment", result.toString());
+        Log.e("Online_VideoFragment", result.getChapterList().size() + "");
+        Log.e("Online_VideoFragment", result.getChapterList().get(0).getSectionList().get(0).getSectionType() + "");
+
         if (result != null && result.getChapterList().size() > 0 && result.getChapterList().get(0).getSectionList().get(0).getSectionType() == 0) {
             mLlBottom.setVisibility(View.VISIBLE);
         } else {
@@ -102,24 +112,27 @@ public class Online_VideoFragment extends BaseFragment {
 
         wrapperList = new ArrayList<>();
         DataHolder<String> titleHolder = (context, holder, item, position) -> ((TextView) holder.getView(R.id.item_title)).setText(item);
-        DataHolder<OnlineDetailsResult.EvalBean.SectionListBean> dataHolder = (context, holder, bean, position) -> {
+        DataHolder<OnlineDetailsResult.ChapterListBean.SectionListBean> dataHolder = (context, holder, bean, position) -> {
             ((TextView) holder.getView(R.id.item_title)).setText(bean.getSectionName());
             ProgressBar bar = holder.getView(R.id.pb_item_download);
             barMap.put(String.valueOf(bean.getChapterId()) + String.valueOf(bean.getSectionId()), bar);
-
             if (bean.getTimeLength() < 1) {
                 holder.getView(R.id.item_time).setVisibility(View.GONE);
             } else {
                 ((TextView) holder.getView(R.id.item_time)).setText("时长：" + bean.getTimeLength() + "分钟");
             }
-            if (result.getCourse().getChargeType() == 0 || bean.getFree() == 1) {
+            if (bean.getFree() == 0) {//免费
                 holder.getView(R.id.item_isFree).setBackgroundResource(R.drawable.shape_line_green);
                 ((TextView) holder.getView(R.id.item_isFree)).setTextColor(Color.parseColor("#059b76"));
                 ((TextView) holder.getView(R.id.item_isFree)).setText("免费");
-            } else {
+            } else if (bean.getFree() == 1) {//笔试会员
                 holder.getView(R.id.item_isFree).setBackgroundResource(R.drawable.shape_line_orange);
                 ((TextView) holder.getView(R.id.item_isFree)).setTextColor(Color.parseColor("#F88437"));
                 ((TextView) holder.getView(R.id.item_isFree)).setText("会员");
+            } else if (bean.getFree() == 2) {//面试会员
+                holder.getView(R.id.item_isFree).setBackgroundResource(R.drawable.shape_line_orange);
+                ((TextView) holder.getView(R.id.item_isFree)).setTextColor(Color.parseColor("#F88437"));
+                ((TextView) holder.getView(R.id.item_isFree)).setText("会员");//面试会员
             }
             if (bean.getSectionType() == 0) {
                 ((TextView) holder.getView(R.id.item_type)).setText("视频");//tv_hint.setText("视频");
@@ -210,24 +223,35 @@ public class Online_VideoFragment extends BaseFragment {
                         goActivity(LoginAty.class);
                         return;
                     }
-                    if (APP.isVip || result.getCourse().getChargeType() == 0 || ((OnlineDetailsResult.EvalBean.SectionListBean) wrapperList.get(position).getData()).getFree() == 1) {
-                        OnlineDetailsResult.EvalBean.SectionListBean bean = (OnlineDetailsResult.EvalBean.SectionListBean) wrapperList.get(position).getData();
-                        if (bean.getSectionType() == 0) {
-                            //下载视频
-                            List<VideoDb> vdb = getData(bean.getSectionUrl() + ".f20.mp4");
-                            if (vdb.size() > 0) {
-                                VideoDb video = vdb.get(0);
-                                setAlertView(video, bean, position);
+                    int free = ((OnlineDetailsResult.ChapterListBean.SectionListBean) wrapperList.get(position).getData()).getFree();
+                    if (free == 0) {//免费
+                        next(position);
+                    } else {
+                        if (APP.singleVip == 0) {//未开通会员
+                            HTTPutils.showGOvipDialog(getActivity(), "您尚未开通本学段的会员", "开通会员");
+                        } else if (APP.singleVip == 1) {//开通了一种 会员
+                            if (APP.SingleVipBean.getVipInfoList().get(0).getChargeType() == free) {//课程会员和开通的会员相对应
+                                if (APP.SingleVipBean.getVipInfoList().get(0).getVipStatus() == 2) {//开通的=会员已过期
+                                    HTTPutils.showGOvipDialog(getActivity(), "本学段的会员已过期", "续费");
+                                } else {//未过期
+                                    next(position);
+                                }
+                            } else {//课程会员与开通的会员不对应
+                                HTTPutils.showGOvipDialog(getActivity(), "您尚未开通本学段的会员", "开通会员");
                             }
 
-                        } else {
-                            //打开html页面
-                            DetailsFragmentAty.goHtmlAty(getActivity(), bean.getSectionName(), bean.getSectionUrl());
+                        } else if (APP.singleVip == 2) {//两种会员都开通了
+                            for (int i = 0; i < APP.SingleVipBean.getVipInfoList().size(); i++) {//遍历取出与之对应的会员
+                                if (APP.SingleVipBean.getVipInfoList().get(i).getChargeType() == free) {//判断该课程下的会员是否到期了
+                                    if (APP.SingleVipBean.getVipInfoList().get(i).getVipStatus() == 2) {//会员过期
+                                        HTTPutils.showGOvipDialog(getActivity(), "本学段的会员已过期", "续费");
+                                    } else {
+                                        next(position);
+                                    }
+                                }
+                            }
                         }
-                    } else {
-                        HTTPutils.showGOvipDialog(getActivity());
                     }
-
                 }
             }
 
@@ -236,6 +260,23 @@ public class Online_VideoFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void next(int position) {
+        OnlineDetailsResult.ChapterListBean.SectionListBean bean = (OnlineDetailsResult.ChapterListBean.SectionListBean) wrapperList.get(position).getData();
+        if (bean.getSectionType() == 0) {
+            //下载视频
+            List<VideoDb> vdb = getData(bean.getSectionUrl() + ".f20.mp4");
+            if (vdb.size() > 0) {
+                VideoDb video = vdb.get(0);
+                setAlertView(video, bean, position);
+            }
+
+        } else {
+            //打开html页面
+            DetailsFragmentAty.goHtmlAty(getActivity(), bean.getSectionName(), bean.getSectionUrl());
+        }
+
     }
 
     private List<VideoDb> getData(String url) {
@@ -250,8 +291,7 @@ public class Online_VideoFragment extends BaseFragment {
         return DF.format(finished / (1024 * 1024)) + "M/" + DF.format(total / (1024 * 1024)) + "M";
     }
 
-
-    private void setAlertView(final VideoDb vdb, final OnlineDetailsResult.EvalBean.SectionListBean sections, final int pos) {
+    private void setAlertView(final VideoDb vdb, final OnlineDetailsResult.ChapterListBean.SectionListBean sections, final int pos) {
         final NormalDialog dialog = new NormalDialog(getActivity());
         getActivity().setTheme(R.style.ActionSheetStyleIOS);
         if (vdb.getDownloadstatus() == 0 || vdb.getDownloadstatus() == -1) {
@@ -341,8 +381,12 @@ public class Online_VideoFragment extends BaseFragment {
         } else {
             /**下载完成*/
             String[] item = {"本地播放", "删除视频"};
-            sheetDialog = new ActionSheetDialog(getActivity(), item, null);
-            sheetDialog.isTitleShow(false).show();
+            sheetDialog = new ActionSheetDialog(mActivity, item, null);
+            sheetDialog.isTitleShow(false);
+            if (!mActivity.isFinishing()) {
+                sheetDialog.show();
+            }
+
             sheetDialog.setOnOperItemClickL(new OnOperItemClickL() {
                 @Override
                 public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -388,7 +432,7 @@ public class Online_VideoFragment extends BaseFragment {
         getActivity().startService(down);
     }
 
-    private void deleteVideo(final OnlineDetailsResult.EvalBean.SectionListBean sections, final int pos) {
+    private void deleteVideo(final OnlineDetailsResult.ChapterListBean.SectionListBean sections, final int pos) {
 
         final NormalDialog dialog = new NormalDialog(getActivity());
         dialog.content("确定删除本地视频吗?")//
@@ -473,14 +517,15 @@ public class Online_VideoFragment extends BaseFragment {
                         });
                         return;
                     }
-                    sheetDialog = new ActionSheetDialog(getActivity(), new String[]{"确认"}, null);
+                    sheetDialog = new ActionSheetDialog(mActivity, new String[]{"确认"}, null);
                     sheetDialog.title("是否删除本节课中的全部视频")
 
                             .titleTextColor(AppUtils.getColor(R.color.color333))
                             .titleTextSize_SP(14)
-                            .layoutAnimation(null)
-
-                            .show();
+                            .layoutAnimation(null);
+                    if (!mActivity.isFinishing()) {
+                        sheetDialog.show();
+                    }
                     sheetDialog.setOnOperItemClickL(new OnOperItemClickL() {
                         @Override
                         public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -520,12 +565,16 @@ public class Online_VideoFragment extends BaseFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                sheetDialog = new ActionSheetDialog(getActivity(), new String[]{"确认"}, null);
+                Log.e("Subscriber", mActivity.toString());
+                sheetDialog = new ActionSheetDialog(mActivity, new String[]{"确认"}, null);
                 sheetDialog.title("是否下载本节课中的全部视频")
                         .titleTextColor(AppUtils.getColor(R.color.color333))
                         .titleTextSize_SP(14)
-                        .layoutAnimation(null)
-                        .show();
+                        .layoutAnimation(null);
+
+                if (!mActivity.isFinishing()) {
+                    sheetDialog.show();
+                }
 
                 sheetDialog.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
@@ -582,12 +631,14 @@ public class Online_VideoFragment extends BaseFragment {
                     });
                     return;
                 }
-                sheetDialog = new ActionSheetDialog(getActivity(), new String[]{"确认"}, null);
+                sheetDialog = new ActionSheetDialog(mActivity, new String[]{"确认"}, null);
                 sheetDialog.title("是否暂停下载本节课中的全部视频")
                         .titleTextColor(AppUtils.getColor(R.color.color333))
                         .titleTextSize_SP(14)
-                        .layoutAnimation(null)
-                        .show();
+                        .layoutAnimation(null);
+                if (!mActivity.isFinishing()) {
+                    sheetDialog.show();
+                }
                 sheetDialog.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -699,7 +750,7 @@ public class Online_VideoFragment extends BaseFragment {
                     }
                     break;
                 case 4:
-                    OnlineDetailsResult.EvalBean.SectionListBean sections = (OnlineDetailsResult.EvalBean.SectionListBean) msg.obj;
+                    OnlineDetailsResult.ChapterListBean.SectionListBean sections = (OnlineDetailsResult.ChapterListBean.SectionListBean) msg.obj;
                     File oldfile = new File(FileIoUtils.getDiskCacheDir(getActivity(), "movies").getPath(), MD5Utils.getMd5("bwk001_" + result.getCourse().getCourseId() + "_" + sections.getChapterId() + "_" + sections.getSectionId()) + ".mp4");
                     L.e("播放：" + oldfile.getPath());
                     if (oldfile.exists()) {
@@ -747,27 +798,35 @@ public class Online_VideoFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+
+        Log.e("onDestroyView", "销毁");
     }
 
     @OnClick({R.id.tv_allDown, R.id.tv_allDelete})
     public void onClick(View view) {
-        if (APP.isVip) {
+        //下载也是只有会员才能下载
+        if (APP.singleVip != 0) {
             switch (view.getId()) {
                 case R.id.tv_allDown:
-                    if (mTvAllDown.getText().toString().equals("全部下载")) {
-                        mTvAllDown.setText("全部暂停");
-                        EventBus.getDefault().post(true, "allstart");
-                    } else {
-                        mTvAllDown.setText("全部下载");
-                        EventBus.getDefault().post(true, "allstop");
+                    if (interval_click_utils.isFastClick()) {//防止连续重复点击
+                        if (mTvAllDown.getText().toString().equals("全部下载")) {
+                            mTvAllDown.setText("全部暂停");
+                            EventBus.getDefault().post(true, "allstart");
+                        } else {
+                            mTvAllDown.setText("全部下载");
+                            EventBus.getDefault().post(true, "allstop");
+                        }
                     }
+
                     break;
                 case R.id.tv_allDelete:
-                    EventBus.getDefault().post(true, "alldelete");
+                    if (interval_click_utils.isFastClick()) {
+                        EventBus.getDefault().post(true, "alldelete");
+                    }
                     break;
             }
         } else {
-            HTTPutils.showGOvipDialog(getActivity());
+            HTTPutils.showGOvipDialog(getActivity(), "请开通会员", "开通会员");
         }
 
     }

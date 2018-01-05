@@ -71,7 +71,7 @@
                 android:paddingLeft="40px"
                 android:paddingRight="40px"
                 android:paddingTop="3px"
-                android:text="笔试会员"
+                android:text="会员"
                 android:textColor="#F88437"
                 android:textSize="@dimen/TextSize12" />
 

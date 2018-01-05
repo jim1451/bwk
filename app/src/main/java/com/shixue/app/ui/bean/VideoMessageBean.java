@@ -13,6 +13,10 @@ public class VideoMessageBean {
     String richText;//富文本
     int messageID;//聊天id号
 
+    public VideoMessageBean() {
+
+    }
+
     public VideoMessageBean(long id, String name, String chatText, String richText, int messageID) {
         this.id = id;
         this.name = name;

@@ -62,7 +62,7 @@ public class Personal_vipFragment extends BaseFragment {
         HTTPutils.getVipBean(APP.userInfo.getBody().getUser().getMobile(), APP.projectID, b -> {
             if (APP.isVip) {
                 tvVip.setVisibility(View.VISIBLE);
-                tvVip.setText("剩余(" + APP.vipDay + "天) " + "截至日期:" + APP.vipBean.getSvipDate());
+//                tvVip.setText("剩余(" + APP.vipDay + "天) " + "截至日期:" + APP.vipBean.getSvipDate());
                 btnVip.setText("会员续期");
             } else {
                 btnVip.setText("开通会员");

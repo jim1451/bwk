@@ -171,7 +171,7 @@ public class OpenVipActivity extends BaseActivity {
 
     private void changeData() {
         if (vipList == null) return;
-        APP.apiService.getSysTime()
+        APP.apiService.getSysTime("")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<SysTimeResult>() {
@@ -195,21 +195,21 @@ public class OpenVipActivity extends BaseActivity {
     }
 
     private void getSysTimeOK(long nowTime) {
-        if (APP.isVip && APP.vipBean != null) {
-            mTvOldData.setText("原有效期：" + APP.vipBean.getSlastUpdateDate().split(" ")[0] + " 至 " + APP.vipBean.getSvipDate() + "  共" + APP.vipDay + "天");
-            //到期时间
-            long endLong = getEndDate(APP.vipBean.getVipDate());
-            endDate = sDateFormat.format(endLong);
-            int endDay = (int) ((endLong - nowTime) / 1000 / 60 / 60 / 24);
-            mTvNewData.setText("现有效期：" + APP.vipBean.getSlastUpdateDate().split(" ")[0] + " 至 " + endDate.split(" ")[0] + " 共" + endDay + "天");
-            mTvPayPrice.setText("支付金额：" + vipList.get(checkType) + "元");
-        } else {
-            long endLong = getEndDate(nowTime);
-            endDate = sDateFormat.format(endLong);
-            int endDay = (int) ((endLong - nowTime) / 1000 / 60 / 60 / 24);
-            mTvNewData.setText("现有效期：" + sDateFormat.format(nowTime).split(" ")[0] + " 至 " + endDate.split(" ")[0] + " 共" + endDay + "天");
-            mTvPayPrice.setText("支付金额：" + vipList.get(checkType) + "元");
-        }
+//        if (APP.isVip && APP.vipBean != null) {
+//            mTvOldData.setText("原有效期：" + APP.vipBean.getSlastUpdateDate().split(" ")[0] + " 至 " + APP.vipBean.getSvipDate() + "  共" + APP.vipDay + "天");
+//            //到期时间
+//            long endLong = getEndDate(APP.vipBean.getVipDate());
+//            endDate = sDateFormat.format(endLong);
+//            int endDay = (int) ((endLong - nowTime) / 1000 / 60 / 60 / 24);
+//            mTvNewData.setText("现有效期：" + APP.vipBean.getSlastUpdateDate().split(" ")[0] + " 至 " + endDate.split(" ")[0] + " 共" + endDay + "天");
+//            mTvPayPrice.setText("支付金额：" + vipList.get(checkType) + "元");
+//        } else {
+//            long endLong = getEndDate(nowTime);
+//            endDate = sDateFormat.format(endLong);
+//            int endDay = (int) ((endLong - nowTime) / 1000 / 60 / 60 / 24);
+//            mTvNewData.setText("现有效期：" + sDateFormat.format(nowTime).split(" ")[0] + " 至 " + endDate.split(" ")[0] + " 共" + endDay + "天");
+//            mTvPayPrice.setText("支付金额：" + vipList.get(checkType) + "元");
+//        }
 
     }
 
@@ -295,7 +295,7 @@ public class OpenVipActivity extends BaseActivity {
                                 progess.cancel();
                                 if (payDealResult.getPay().getPayType() == 0) {
                                     L.e("支付参数：" + payDealResult.getPay().getCargoName() + "==金额:" + payDealResult.getPay().getPayMoney() + "==id：" + payDealResult.getPay().getOrderNumber());
-                                    PayUtils.AliPay(OpenVipActivity.this, ApiService.NOTIFY_URL, ApiService.ali_APPID, ApiService.ali_APPACCOUNT, ApiService.ali_APPKEY, title, payDealResult.getPay().getPayMoney() + "", payDealResult.getPay().getOrderNumber() + "", "0000");
+                                    PayUtils.AliPay(OpenVipActivity.this, APP.NOTIFY_URL, ApiService.ali_APPID, ApiService.ali_APPACCOUNT, ApiService.ali_APPKEY, title, payDealResult.getPay().getPayMoney() + "", payDealResult.getPay().getOrderNumber() + "", "0000");
                                     PayUtils.getAliResult(new PayUtils.onAliResult() {
                                         @Override
                                         public void onResult(String result) {

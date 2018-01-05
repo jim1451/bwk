@@ -44,17 +44,25 @@ public class HomeModel extends BaseModel<HomeContract.View> implements HomeContr
     public void getNews(int pageNo) {
         //1.10修改，原有默认全国的，现在省份查询
         // 代理商的 APP.projectID 项目id 固定为1
-        APP.apiService.getNews(pageNo, 10, 1, /*APP.ProvinceID*/APP.userInfo.getBody().getUser().getMobile())
+
+
+        if (APP.userInfo == null || APP.userInfo.getBody() == null) {
+            return;
+        }
+
+        Log.e("news", "获取新闻消息成功" + APP.userInfo.getBody().getUser().getMobile().equals("13068902078") + APP.userInfo.getBody().getUser().getMobile().trim().toString().equals(APP.userInfo.getBody().getUser().getMobile().toString().trim()));
+        APP.apiService.getNews(pageNo, 10, 1, APP.userInfo.getBody().getUser().getMobile())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<NewsResult>() {
                     @Override
                     protected void _onNext(NewsResult newsResult) {
-                        Log.e("news", "获取新闻消息成功");
+                        Log.e("news", "获取新闻消息成功---000" + newsResult.toString());
 
                         if (newsResult.getNewList().size() > 0) {
                             mView.showNewsList(newsResult.getNewList());
                         } else {
+                            Log.e("news", "获取新闻消息成功----11");
                             mView.getNewsOnError();
                         }
                     }
@@ -62,6 +70,7 @@ public class HomeModel extends BaseModel<HomeContract.View> implements HomeContr
                     @Override
                     protected void _onError(String msg) {
                         Log.e("news", msg);
+                        Log.e("news", "获取新闻消息成功----22");
                         mView.showToast(msg);
                         mView.getNewsOnError();
                     }

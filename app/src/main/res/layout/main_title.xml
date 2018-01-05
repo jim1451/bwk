@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,7 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="50px">
+            android:paddingLeft="20px">
 
 
             <ImageView
@@ -28,8 +27,8 @@
                 android:layout_height="90px"
                 android:background="@drawable/shape_round_white"
                 android:scaleType="centerInside"
-                app:layout_auto_baseheight="width"
-                />
+                android:visibility="gone"
+                app:layout_auto_baseheight="width" />
 
 
             <com.zhy.autolayout.AutoLinearLayout
@@ -37,16 +36,17 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:paddingLeft="20px">
+                android:paddingLeft="10px">
 
                 <TextView
                     android:id="@+id/tv_title_examType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="-10px"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorWhite"
-                    android:layout_marginBottom="-10px"
-                    android:textSize="@dimen/TextSize"/>
+                    android:textSize="@dimen/TextSize"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_title_examDir"
@@ -54,23 +54,24 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="10px"
                     android:drawableRight="@drawable/icon11"
+                    android:text=""
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/TextSize11"/>
+                    android:textSize="@dimen/TextSize" />
             </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_title_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30px"
-            android:text="广东-广州"
+            android:text=""
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/TextSize"/>
+            android:textSize="@dimen/TextSize" />
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>

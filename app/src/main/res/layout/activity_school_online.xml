@@ -70,20 +70,17 @@
         <RadioButton
             style="@style/schoolRadioBtn"
             android:drawableTop="@drawable/selector_btn_school_list"
-            android:text="目录"
-            />
+            android:text="目录" />
 
         <RadioButton
             style="@style/schoolRadioBtn"
             android:drawableTop="@drawable/selector_btn_school_details"
-            android:text="详情"
-            />
+            android:text="详情" />
 
         <RadioButton
             style="@style/schoolRadioBtn"
             android:drawableTop="@drawable/selector_btn_school_video"
-            android:text="本地视频"
-            />
+            android:text="本地视频" />
     </RadioGroup>
 
     <FrameLayout

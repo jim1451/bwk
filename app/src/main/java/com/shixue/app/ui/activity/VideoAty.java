@@ -134,7 +134,7 @@ public class VideoAty extends BaseActivity {
     static boolean isShowVide = false;//设置主屏是否显示video
     SweetDialog progess;//弹窗提示
     boolean isMute;//是否可以聊天(这个是在聊天监听里的)
-    static boolean isMax = true;//是否最大化显示
+    static boolean isMax = false;//是否最大化显示
     DirectDetailsResult.LiveSectionListBean mSectionBean;//节数据
     boolean isVod = false;//是否是录播
     boolean isShowBtn;//是否显示按钮
@@ -174,41 +174,22 @@ public class VideoAty extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gensee_video);
         ButterKnife.bind(this);
-        Log.e("video", "---12----");
-
-        setOnBackListener(() -> {//返回键监听
-            Log.e("video", "---14----");
-
-            if (!isMax) {
-                Log.e("video", "---15----");
-                isMax = true;
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+        setOnBackListener(() -> {
+            if (isMax) {
+                isMax = false;
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             } else {
-                Log.e("video", "---16----");
                 setResult(999);
                 finish();
             }
         });
         mTopBack.setOnClickListener(v -> {
-            if (!isMax) {
-                Log.e("video", "---15----");
-                isMax = true;
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
-            } else {
-                Log.e("video", "---16----");
-                setResult(999);
-                finish();
-            }
-        });
-        mMaxBack.setOnClickListener(v -> {
-            Log.e("video", "---17----");
-//            if(!isMax){
-//
-//            }
-//            isMax = true;
-//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             setResult(999);
             finish();
+        });
+        mMaxBack.setOnClickListener(v -> {
+            isMax = false;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         });
         /**
          * 控件监听
@@ -327,8 +308,6 @@ public class VideoAty extends BaseActivity {
         param.setServiceType(ServiceType.TRAINING);//服务器类型。固定
         param.setNickName(APP.userInfo.getBody().getUser().getSex() + APP.userInfo.getBody().getUser().getUserName());
         vodSite.getVodObject(param);
-
-
         //聊天消息
        /* mRvMessage.setLayoutManager(new LinearLayoutManager(this));
         mReAdpt = new SingleReAdpt<ChatMsg>(VideoAty.this, R.layout.recycler_video_vodmsg, vodMsgList) {
@@ -395,12 +374,6 @@ public class VideoAty extends BaseActivity {
         GenseeConfig.isNeedChatMsg = true;
         vodPlayer = new VODPlayer();
         changeView();
-        Log.e("video", "---18----");
-        if (isMax) {
-            Log.e("video", "---22----");
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
-
         mSeekMin.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -646,8 +619,6 @@ public class VideoAty extends BaseActivity {
             }
         };
         mRvMessage.setAdapter(mReAdpt);
-
-
         //聊天监听
         player.setOnChatListener(new OnChatListener() {
             @Override
@@ -1201,18 +1172,12 @@ public class VideoAty extends BaseActivity {
     protected void onPause() {
         super.onPause();
         //暂停视频和音频播放
-        Log.e("video", "---6----");
-
         if (player != null) {
             player.audioSet(true);
             player.videoSet(true);
-            Log.e("video", "---7----");
-
         }
         if (vodPlayer != null) {
             vodPlayer.pause();
-            Log.e("video", "---8----");
-
         }
     }
 
@@ -1220,18 +1185,12 @@ public class VideoAty extends BaseActivity {
     protected void onResume() {
         super.onResume();
         //重新打开视频和音频播放
-        Log.e("video", "---3----");
-
         if (player != null) {
             player.audioSet(false);
             player.videoSet(false);
-            Log.e("video", "---4----");
-
         }
         if (vodPlayer != null) {
             vodPlayer.resume();
-            Log.e("video", "---5----");
-
         }
     }
 
@@ -1240,15 +1199,15 @@ public class VideoAty extends BaseActivity {
         super.onDestroy();
         L.e("onDestroy");
         if (player != null) {
-            Log.e("video", "---1----");
             player.leave();//退出直播间
             player.release(VideoAty.this);//释放播放器资源
         }
         if (vodPlayer != null) {
-            Log.e("video", "---2----");
             vodPlayer.release();
             //    VodSite.release();
         }
+        isMax = false;
+
     }
 
     public void L(String str) {
@@ -1419,8 +1378,6 @@ public class VideoAty extends BaseActivity {
                 changeView();
                 break;
             case R.id.tv_max:
-                Log.e("video", "---19----");
-
                 isMax = true;
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 //横屏设置
@@ -1431,7 +1388,6 @@ public class VideoAty extends BaseActivity {
                 changeView();
                 break;
             case R.id.tv_min:
-                Log.e("video", "---20----");
                 isMax = false;
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //竖屏设置

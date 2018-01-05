@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140px"
+        android:background="@color/colorAPP">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="40px"
+            android:src="@drawable/icon10" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="会员中心"
+            android:textColor="@color/white"
+            android:textSize="@dimen/TextSize" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+    <com.shixue.app.widget.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="40px"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/TextSize"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text="1、会员能学对应类别的所有课程（包括直播、课件和题库）。"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"-------------------
+        android:textSize="@dimen/TextSize"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text="2、不同考试类别（如初级职称、中级职称、会计实操等）的会员需要单独购买。"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="20px"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/TextSize"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:text=""
+        android:layout_height="wrap_content" />
+    </com.zhy.autolayout.AutoLinearLayout>
+    </com.shixue.app.widget.MyScrollview>
+</com.zhy.autolayout.AutoLinearLayout>

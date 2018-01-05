@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="40px"
+        android:paddingRight="40px">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tvTypeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="幼儿园"
+            android:textColor="@color/uvv_black" />
+
+        <TextView
+            android:id="@+id/tvVipType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="面试Vip" />
+
+        <TextView
+            android:id="@+id/tvVipData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2018-7-31 截止" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <include layout="@layout/line" />
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,9 +1,11 @@
 package com.shixue.app.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -30,7 +32,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
 
 
 /**
@@ -86,13 +87,17 @@ public class School_Online_DetailsAty extends BaseFragmentActivity {
 
     }
 
-    private void getCourseList() {
-        APP.apiService.getOnlineDetails(CourseID)
+    private void getCourseList() {//获取在线课程详情
+
+        Log.e("Online_DetailsAty", CourseID + "");
+        APP.apiService.getOnlineDetails(CourseID, APP.userInfo.getBody().getUser().getMobile())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscribe<OnlineDetailsResult>() {
                     @Override
                     protected void _onNext(OnlineDetailsResult onlineDetailsResult) {
+
+                        Log.e("Online_DetailsAty", "获取课程详情数据成功！");
                         getCourseListOK(onlineDetailsResult);
                         mDialog.cancel();
                     }
@@ -107,7 +112,7 @@ public class School_Online_DetailsAty extends BaseFragmentActivity {
 
     private void getCourseListOK(OnlineDetailsResult result) {
         this.result = result;
-        Glide.with(School_Online_DetailsAty.this).load(ApiService.picUrl + result.getCourse().getPictureUrl()).into(mImgHead);
+        Glide.with(School_Online_DetailsAty.this).load(APP.picUrl + result.getCourse().getPictureUrl()).into(mImgHead);
         if (result.getCourse().getChargeType() == 0) {
             mTvIsVip.setText("免费");
             mTvIsVip.setTextColor(Color.parseColor("#059B76"));
@@ -143,6 +148,7 @@ public class School_Online_DetailsAty extends BaseFragmentActivity {
             }*/
         });
     }
+
 
     @Override
     protected void onResult(int request, Intent data) {
